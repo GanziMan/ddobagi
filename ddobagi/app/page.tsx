@@ -10,43 +10,52 @@ export default function Home() {
 
       {/* ===== Hero ===== */}
       <section className="relative bg-white text-[f6f6f6] overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 py-16 md:py-36 flex flex-col gap-4 md:gap-6">
-          <p className="text-5xl sm:text-6xl md:text-8xl lg:text-[15vw] font-archivo font-extrabold text-[#f6f6f6] leading-none select-none">
+        <div className="max-w-7xl mx-auto px-6 py-16 flex flex-col gap-4 md:gap-6">
+          <p className="text-center text-5xl sm:text-6xl md:text-8xl lg:text-[15vw] font-archivo font-extrabold text-[#f6f6f6] leading-none select-none">
             DDOBAGI
             <br />
             TOOLS
           </p>
-          {/* <Image
-            src={"/main/ddobagi-tools.png"}
-            width={300}
-            height={200}
-            alt="ddobagi tools"
-          /> */}
-          {/* <h1 className="text-xl sm:text-2xl md:text-4xl font-bold leading-tight max-w-lg">
-            Korea
-            <br />
-            Business Setup &amp;
-            <br />
-            Entry Consulting
-          </h1> */}
-          {/* 우측 일러스트 자리 */}
-          <div className="absolute right-8 top-1/2 -translate-y-1/2 hidden lg:block">
-            {/* <div className="w-28 h-28 bg-primary/20 rounded-full" /> */}
-            <CircularText />
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full">
+            <p className="font-archivo text-[#B53131] text-[120px] leading-[110%] text-center font-extrabold">
+              <span>Korea</span>
+              <br />
+              <span>Business Setup &</span>
+              <br />
+              <span>Entry Consulting</span>
+            </p>
           </div>
         </div>
+
+        {/* 우측 일러스트 자리 */}
+
+        <CircularText />
       </section>
 
       {/* ===== CTA Banner ===== */}
-      <section className="bg-primary text-white">
-        <div className="max-w-7xl mx-auto px-6 py-10 md:py-16 text-center flex flex-col items-center gap-3 md:gap-4">
-          <p className="text-xs md:text-sm opacity-80">서비스 설명 텍스트</p>
-          <p className="text-xs md:text-sm opacity-80">부가 설명 텍스트</p>
-          <h2 className="text-2xl md:text-4xl font-extrabold">
-            단 29일 이내 완성!
+      <section className="bg-black text-white">
+        <div className="max-w-7xl mx-auto px-6 py-10 md:py-16 text-center flex flex-col items-center">
+          <p className="text-xs md:text-[28px] opacity-80 text-[#B53131] font-archivo font-extrabold">
+            DDOBAGI TOOLS ONE-STOP SOLUTION
+          </p>
+          <p className="text-xs md:text-[30px] opacity-80 mt-15 font-light">
+            맞춤형 건설팅과 함께
+            <br />
+            나만의 회사를 설립해보세요
+          </p>
+          <h2 className="text-2xl md:text-[48px] font-extrabold mt-7.5">
+            단 25일 이내 완성!
           </h2>
-          <p className="text-xs md:text-sm opacity-80 max-w-md">
-            하단 설명 텍스트를 입력하세요.
+          <p className="text-xs md:text-[30px] opacity-80 mt-7.5 font-light">
+            한국 법인 설립부터
+            <br />
+            내가 원하는 플랫폼 어디든 입점 가능
+          </p>
+
+          <p className="text-xs md:text-[19px] opacity-80 mt-19.5">
+            고객에 공감하고 상황과 니즈에 맞춰
+            <br />
+            현지 정착 솔루션을 제공합니다.
           </p>
         </div>
       </section>
@@ -307,41 +316,12 @@ export default function Home() {
 
 const CircularText = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-black">
-      <div className="relative w-80 h-80 flex items-center justify-center">
-        {/* 1. 배경 원 및 테두리 */}
-        <div className="absolute inset-0 border border-white rounded-full opacity-50" />
-
-        {/* 2. SVG를 이용한 곡선 텍스트 */}
-        <svg
-          viewBox="0 0 200 200"
-          className="absolute inset-0 w-full h-full animate-spin-slow">
-          <defs>
-            {/* 텍스트가 따라갈 투명한 원 경로 정의 (반지름 약 80) */}
-            <path
-              id="circlePath"
-              d="M 100, 100 m -80, 0 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0"
-            />
-          </defs>
-          <text
-            fill="white"
-            className="text-[14px] font-medium tracking-[0.2em] ">
-            <textPath href="#circlePath" startOffset="40%" className="">
-              ddobagi tools
-            </textPath>
-          </text>
-        </svg>
-
-        {/* 3. 중앙 요소 (화살표 및 중앙 텍스트) */}
-        <div className="flex flex-col items-center text-red-500">
-          <span className="text-4xl mb-2">↓</span>
-          <span className="text-sm font-bold tracking-widest uppercase rotate-90 leading-none">
-            ddobagi tools
-          </span>
-        </div>
-      </div>
-    </div>
+    <Image
+      className="absolute right-0 bottom-0"
+      src={"/main/icon-arrow-pc.svg"}
+      width={250}
+      height={250}
+      alt=""
+    />
   );
 };
-
-CircularText;
