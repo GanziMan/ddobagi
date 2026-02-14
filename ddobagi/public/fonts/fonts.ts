@@ -1,6 +1,6 @@
 import localFont from "next/font/local";
 
-export const Pretendard = localFont({
+export const pretendard = localFont({
   src: [
     {
       path: "./Pretendard-Bold.otf",
@@ -13,6 +13,7 @@ export const Pretendard = localFont({
       style: "normal",
     },
   ],
+  variable: "--font-pretendard",
   display: "swap",
 });
 
@@ -30,5 +31,17 @@ export const archivo = localFont({
     },
   ],
   variable: "--font-archivo",
+  display: "swap",
+});
+
+export const archivoblack = localFont({
+  src: [
+    {
+      path: "./Archivo_SemiExpanded-Black.ttf",
+      weight: "900",
+      style: "normal",
+    },
+  ],
+  variable: "--font-archivoblack",
   display: "swap",
 });

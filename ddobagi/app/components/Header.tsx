@@ -14,7 +14,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div className="container mx-auto px-5 md:px-10 h-16 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 bg-primary rounded-full" />
           <span className="font-bold text-lg">또바기</span>
