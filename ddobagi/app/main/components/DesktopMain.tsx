@@ -249,25 +249,29 @@ function DesktopSection7() {
 function DesktopSection8() {
   return (
     <section className="bg-bk py-35 text-white flex justify-center">
-      <div className="max-w-[1280px] text-center">
-        <p className="font-archivo text-[26px] font-light tracking-[-0.6px]">
-          DDOBAGI TOOLS
-          <br />
-          ONE-STOP SOLUTION{" "}
-          <span className="font-pretendard font-extralight">에 대한</span>
-        </p>
-        <h2 className="mt-[10px] text-[42px] font-bold tracking-[-1px]">
+      <div className="relative max-w-[1280px] text-left">
+        <div className="relative isolate">
+          <p className="absolute -top-15.5 z-0 font-archivo text-[100px] font-extrabold text-[#2F2E2E] tracking-[-2px]">
+            About
+          </p>
+
+          <p className="relative z-10 font-archivo text-[40px] font-extralight">
+            DDOBAGI TOOLS
+            <br />
+            ONE-STOP SOLUTION
+            <span className="font-pretendard font-light">에 대한</span>
+          </p>
+        </div>
+
+        <h2 className="mt-7.5 text-[40px] font-bold tracking-[-1px]">
           자세한 내용이 궁금하시다면?
         </h2>
-        <p className="mt-[10px] text-[20px] text-[#bfbfbf]">
-          복잡한 비즈니스 과정도 쉽고 빠르게
-        </p>
 
-        <div className="mt-[42px] grid grid-cols-3 gap-[20px]">
+        <div className="mt-10 grid grid-cols-3 gap-5">
           {steps.map((item, idx) => (
             <article
               key={item.title}
-              className="rounded-[18px] border border-[#4f4f4f] bg-[#212121] px-5 py-10">
+              className="rounded-[18px] border border-[#4f4f4f] bg-[#212121] px-5 py-10 text-center">
               <h3 className="font-archivo text-[34px] font-bold leading-[1.1] text-primary">
                 {item.title}
               </h3>
@@ -290,25 +294,32 @@ function DesktopSection9({
   onToggle: (index: number) => void;
 }) {
   return (
-    <section id="faq" className="bg-white px-[320px] py-[140px]">
-      <h2 className="text-center text-[44px] font-bold leading-none tracking-[-1px]">
-        자주 묻는 질문
-      </h2>
+    <section
+      id="faq"
+      className="bg-white py-35 flex gap-54.75 max-w-[1280px] mx-auto ">
+      <div className="relative isolate ">
+        <p className="absolute -top-15.5 font-archivo text-[100px] font-extrabold text-[#F6F6F6] tracking-[-2px]">
+          FAQ
+        </p>
+        <p className="relative z-10 font-pretendard text-[40px] font-bold">
+          자주 묻는 질문
+        </p>
+      </div>
 
-      <div className="mt-[60px] space-y-[16px]">
+      <div className="space-y-5 flex-1">
         {faqItems.map((item, idx) => (
           <article
             key={item.q}
-            className="rounded-[20px] bg-[#f5f5f5] px-[48px] py-[34px]">
+            className="rounded-[20px] bg-[#f5f5f5] p-12 w-full">
             <button
               className="flex w-full items-center justify-between"
               onClick={() => onToggle(idx)}>
-              <div className="flex items-center gap-[12px] text-[22px] font-semibold tracking-[-0.5px]">
+              <div className="flex items-center text-[22px] font-semibold tracking-[-0.5px] w-full">
                 <span>Q.</span>
                 <p>{item.q}</p>
               </div>
               <span
-                className={`text-[30px] leading-none transition-transform ${faqOpen === idx ? "rotate-180" : ""}`}>
+                className={`text-[15px] leading-none transition-transform ${faqOpen === idx ? "rotate-180" : ""}`}>
                 ⌄
               </span>
             </button>
@@ -326,64 +337,65 @@ function DesktopSection9({
 
 function DesktopSection10() {
   return (
-    <section
-      id="contact"
-      className="flex items-center justify-between bg-[#141414] px-[320px] py-[140px] text-white">
-      <div>
-        <p className="font-archivo text-[110px] font-black leading-none tracking-[-2.6px] text-[#2f2e2e]">
-          Contact
-        </p>
-        <h2 className="mt-[-24px] text-[48px] font-bold leading-[1.3] tracking-[-1.2px]">
-          또바기툴즈는
-          <br />
-          항상 준비되어 있습니다.
-        </h2>
-        <button className="mt-[44px] rounded-[100px] bg-[#b53131] px-[52px] py-[26px] text-[24px] font-semibold tracking-[-0.6px]">
-          문의하기
-        </button>
-      </div>
+    <section id="contact" className="bg-bk py-27.5 text-white">
+      <div className="max-w-[1280px] mx-auto flex justify-betwee gap-55.75">
+        <div>
+          <div className="relative isolate mt-39.25">
+            <p className="absolute -top-15.5 z-0 font-archivo text-[110px] font-extrabold text-[#2F2E2E] tracking-[-2px]">
+              Contact
+            </p>
 
-      <div className="w-[620px] space-y-[24px]">
-        {contacts.map((person) => (
-          <article
-            key={person.en}
-            className="rounded-[18px] border border-[#5a5a5a] bg-[#212121] p-[40px]">
-            <div className="flex items-end justify-between">
-              <div>
-                <p className="font-archivo text-[34px] font-black tracking-[-0.8px]">
-                  {person.en}
+            <p className="relative z-10 font-archivo text-[48px] font-extraligh whitespace-pre-line">
+              {"또바기툴즈는\n항상 준비되어 있습니다."}
+            </p>
+          </div>
+          <button className="mt-15 rounded-[100px] bg-primary px-13 py-6.5 text-[13px] font-semibold tracking-[-0.3px]">
+            문의하기
+          </button>
+        </div>
+        <div className="w-[620px] space-y-[24px] flex-1">
+          {contacts.map((person) => (
+            <article
+              key={person.en}
+              className="rounded-[18px] border border-[#5a5a5a] bg-[#212121] p-[40px]">
+              <div className="flex items-end justify-between">
+                <div>
+                  <p className="font-archivo text-[34px] font-black tracking-[-0.8px]">
+                    {person.en}
+                  </p>
+                  <p className="mt-[10px] text-[34px] tracking-[-0.8px]">
+                    {person.ko}{" "}
+                    <span className="text-[18px]">{person.role}</span>
+                  </p>
+                </div>
+                <img
+                  src={person.photo}
+                  alt={person.en}
+                  className="h-[80px] w-[80px] rounded-full object-cover"
+                />
+              </div>
+
+              <div className="mt-[26px] grid grid-cols-2 gap-y-[14px] text-[18px] tracking-[-0.45px]">
+                <p>
+                  <strong className="font-medium">Phone </strong>
+                  {person.phone}
                 </p>
-                <p className="mt-[10px] text-[34px] tracking-[-0.8px]">
-                  {person.ko} <span className="text-[18px]">{person.role}</span>
+                <p>
+                  <strong className="font-medium">Wechat </strong>
+                  {person.wechat}
+                </p>
+                <p>
+                  <strong className="font-medium">Tell </strong>
+                  {person.tell}
+                </p>
+                <p>
+                  <strong className="font-medium">Kakao </strong>
+                  {person.kakao}
                 </p>
               </div>
-              <img
-                src={person.photo}
-                alt={person.en}
-                className="h-[80px] w-[80px] rounded-full object-cover"
-              />
-            </div>
-
-            <div className="mt-[26px] grid grid-cols-2 gap-y-[14px] text-[18px] tracking-[-0.45px]">
-              <p>
-                <strong className="font-medium">Phone </strong>
-                {person.phone}
-              </p>
-              <p>
-                <strong className="font-medium">Wechat </strong>
-                {person.wechat}
-              </p>
-              <p>
-                <strong className="font-medium">Tell </strong>
-                {person.tell}
-              </p>
-              <p>
-                <strong className="font-medium">Kakao </strong>
-                {person.kakao}
-              </p>
-            </div>
-          </article>
-        ))}
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );
