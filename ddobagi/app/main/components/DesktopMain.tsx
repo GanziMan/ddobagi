@@ -249,7 +249,7 @@ function DesktopSection7() {
 function DesktopSection8() {
   return (
     <section className="bg-bk py-35 text-white flex justify-center">
-      <div className="relative max-w-[1280px] text-left">
+      <div className="relative min-w-[1280px] text-left">
         <div className="relative isolate">
           <p className="absolute -top-15.5 z-0 font-archivo text-[100px] font-extrabold text-[#2F2E2E] tracking-[-2px]">
             About
@@ -296,7 +296,7 @@ function DesktopSection9({
   return (
     <section
       id="faq"
-      className="bg-white py-35 flex gap-54.75 max-w-[1280px] mx-auto ">
+      className="bg-white py-35 flex gap-54.75 min-w-[1280px] mx-auto ">
       <div className="relative isolate ">
         <p className="absolute -top-15.5 font-archivo text-[100px] font-extrabold text-[#F6F6F6] tracking-[-2px]">
           FAQ
@@ -318,10 +318,14 @@ function DesktopSection9({
                 <span>Q.</span>
                 <p>{item.q}</p>
               </div>
-              <span
-                className={`text-[15px] leading-none transition-transform ${faqOpen === idx ? "rotate-180" : ""}`}>
-                ⌄
-              </span>
+
+              <Image
+                src={"/icons/arrow-bottom.svg"}
+                width={33}
+                height={33}
+                alt="arrow icon"
+                className={`text-[15px] leading-none transition-transform ${faqOpen === idx ? "rotate-180" : ""}`}
+              />
             </button>
             {faqOpen === idx && (
               <p className="mt-[18px] pl-[34px] text-[18px] leading-[1.55] text-[#5f5f5f]">
@@ -338,7 +342,7 @@ function DesktopSection9({
 function DesktopSection10() {
   return (
     <section id="contact" className="bg-bk py-27.5 text-white">
-      <div className="max-w-[1280px] mx-auto flex justify-betwee gap-55.75">
+      <div className="min-w-[1280px] mx-auto flex justify-betwee gap-55.75">
         <div>
           <div className="relative isolate mt-39.25">
             <p className="absolute -top-15.5 z-0 font-archivo text-[110px] font-extrabold text-[#2F2E2E] tracking-[-2px]">
@@ -418,8 +422,9 @@ function DesktopSection11({
         <div className="grid grid-cols-2 gap-[32px]">
           <label className="flex flex-col gap-[14px]">
             <span className="text-[20px] font-semibold">문의 종류</span>
+            {/* arrow icon 안뜨게 하려면? */}
             <select
-              className="h-[72px] rounded-[8px] bg-[#f5f5f5] px-[24px] text-[18px] text-[#808080] outline-none"
+              className="h-[72px] rounded-[8px] bg-[#f5f5f5] text-[18px] text-[#808080] outline-none appearance-none px-6"
               defaultValue="">
               <option value="" disabled>
                 선택해주세요
@@ -462,19 +467,26 @@ function DesktopSection11({
         <button
           type="button"
           onClick={onToggleAgree}
-          className="flex items-center gap-[10px] text-left text-[16px] text-[#141414]">
+          className="flex items-center gap-2 text-left text-[16px] text-bk">
           <span
-            className={`flex h-[24px] w-[24px] items-center justify-center rounded-[4px] border ${agree ? "border-[#141414] bg-[#141414] text-white" : "border-[#808080] bg-white text-transparent"}`}>
+            className={`flex h-6 w-6 items-center justify-center rounded-full border ${agree && "border-[#808080] bg-white text-transparent"}`}>
             ✓
           </span>
           개인정보 수집 및 이용에 동의합니다. 수집된 정보는 문의 답변 목적으로만
-          사용되며, 법정 보유기간 동안 안전하게 보관됩니다.
+          사용되며, 법정 보유기간 동안 안전 하게 보관됩니다.
         </button>
 
         <button
           type="submit"
-          className="mx-auto mt-[8px] rounded-[100px] bg-[#797979] px-[52px] py-[26px] text-[24px] font-semibold tracking-[-0.6px] text-white">
-          문의 보내기
+          className="mx-auto mt-2 rounded-[100px] bg-[#797979] px-13 py-6.5 text-[24px] font-semibold tracking-[-0.6px] text-white flex items-center gap-3.5">
+          <span>문의 보내기</span>
+          <Image
+            src={"/icons/arrow-right.svg"}
+            width={20}
+            height={27}
+            alt="arrow right"
+            className="inline"
+          />
         </button>
       </form>
     </section>
@@ -517,7 +529,7 @@ export default function DesktopMain() {
   const [agree, setAgree] = useState(false);
 
   return (
-    <div className="hidden min-w-[1280px] md:block">
+    <div className="hidden min-w-[1280px] md:block overflow-x-scroll">
       <DesktopSection1 />
       <DesktopSection2 />
       <DesktopSection3 />
