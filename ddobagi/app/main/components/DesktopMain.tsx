@@ -16,16 +16,27 @@ function DesktopSection1() {
   return (
     <header className="flex h-[96px] items-center justify-between border-b border-[#ebebeb] px-[320px]">
       <Image
-        src="/main/ddobagi-tools.png"
-        width={117}
-        height={42}
-        alt="ddobagi tools"
+        src={"/icons/logo.svg"}
+        width={139}
+        height={50}
+        alt="로고 이미지"
       />
-      <nav className="flex items-center gap-[44px] text-[18px] font-semibold tracking-[-0.4px] text-[#363636]">
-        <a href="#services">서비스</a>
-        <a href="#about">소개</a>
-        <a href="#faq">FAQ</a>
-        <a href="#contact">문의</a>
+      <nav className="flex items-center gap-[44px] font-semibold tracking-[-0.4px] text-primary">
+        <a href="#services">또바기툴즈</a>
+        <a href="#about">서비스</a>
+        <a href="#faq">자사 제안서</a>
+        <a href="#contact">작업 의뢰</a>
+        <a href="#contact">고객센터</a>
+        <a href="#contact">FAQ</a>
+        <a href="#contact">
+          <Image
+            src="/icons/global.svg"
+            width={24}
+            height={24}
+            alt="글로벌 아이콘"
+          />{" "}
+          KR
+        </a>
       </nav>
     </header>
   );
@@ -61,48 +72,27 @@ function DesktopSection2() {
   );
 }
 
-function DesktopSection3() {
-  return (
-    <section className="bg-white py-[20px]">
-      <div className="overflow-hidden">
-        <div className="flex w-max items-center gap-[16px]">
-          {Array.from({ length: 24 }).map((_, idx) => (
-            <Image
-              key={`logo-${idx}`}
-              src="/main/ddobagi-tools.png"
-              width={116}
-              height={42}
-              alt="partner logo"
-              className="h-[54px] w-[150px] object-contain opacity-85"
-            />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function DesktopSection4() {
   return (
     <section className="bg-bk px-[320px] py-[136px] text-white">
-      <p className="text-sm font-archivo text-[#B53131] opacity-80 md:text-xl lg:text-[28px] font-extrabold">
+      <p className="text-sm font-archivo text-[#B53131] opacity-80 text-xl text-[28px] font-extrabold">
         DDOBAGI TOOLS ONE-STOP SOLUTION
       </p>
-      <p className="mt-4 text-xl font-light opacity-80 break-keep md:mt-15 md:text-2xl lg:text-[30px]">
+      <p className="mt-4 text-xl font-light opacity-80 break-keep mt-15 text-2xl text-[30px]">
         맞춤형 건설팅과 함께
-        <br className="hidden md:block" /> 나만의 회사를 설립해보세요
+        <br className="hidden block" /> 나만의 회사를 설립해보세요
       </p>
-      <h2 className="mt-6 text-3xl font-extrabold md:mt-7.5 md:text-4xl lg:text-[48px]">
+      <h2 className="mt-6 text-3xl font-extrabold mt-7.5 text-4xl text-[48px]">
         단 25일 이내 완성!
       </h2>
-      <p className="mt-6 text-lg font-light opacity-80 break-keep md:mt-7.5 md:text-2xl lg:text-[30px]">
+      <p className="mt-6 text-lg font-light opacity-80 break-keep mt-7.5 text-2xl text-[30px]">
         한국 법인 설립부터
-        <br className="hidden md:block" /> 내가 원하는 플랫폼 어디든 입점 가능
+        <br className="hidden block" /> 내가 원하는 플랫폼 어디든 입점 가능
       </p>
 
-      <p className="mt-10 text-base opacity-80 break-keep md:mt-19.5 md:text-lg lg:text-[19px]">
+      <p className="mt-10 text-base opacity-80 break-keep mt-19.5 text-lg text-[19px]">
         고객에 공감하고 상황과 니즈에 맞춰
-        <br className="hidden md:block" /> 현지 정착 솔루션을 제공합니다.
+        <br className="hidden block" /> 현지 정착 솔루션을 제공합니다.
       </p>
     </section>
   );
@@ -111,12 +101,12 @@ function DesktopSection4() {
 function DesktopSection5() {
   return (
     <section id="services" className="bg-white px-[320px] py-[140px]">
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-6.25 lg:grid-cols-3">
-        <div className="mb-8 md:mb-0">
-          <p className="font-archivo text-xl font-extrabold spacing tracking-[-0.7px] md:text-2xl lg:text-[28px]">
+      <div className="grid grid-cols-1 gap-6 grid-cols-2 gap-6.25 grid-cols-3">
+        <div className="mb-8 mb-0">
+          <p className="font-archivo text-xl font-extrabold spacing tracking-[-0.7px] text-2xl text-[28px]">
             DDOBAGI TOOLS
           </p>
-          <h2 className="font-archivo mb-4 text-4xl font-extrabold leading-[1.1] tracking-[-1.625px] text-[#B53131] md:mb-12 md:text-5xl lg:text-[65px]">
+          <h2 className="font-archivo mb-4 text-4xl font-extrabold leading-[1.1] tracking-[-1.625px] text-[#B53131] mb-12 text-5xl text-[65px]">
             What
             <br />
             We DO
@@ -126,17 +116,15 @@ function DesktopSection5() {
         {desktopServices.map((item, i) => (
           <div
             key={item.title}
-            className="flex flex-col gap-6 rounded-[18px] bg-[#f9f9f9] p-8 md:gap-10.5 md:p-12">
-            <h3 className="text-lg font-bold md:text-lg lg:text-xl">
-              {item.title}
-            </h3>
+            className="flex flex-col gap-6 rounded-[18px] bg-[#f9f9f9] p-8 gap-10.5 p-12">
+            <h3 className="text-lg font-bold text-lg text-xl">{item.title}</h3>
             <div className="w-full">
               <Image
                 src={`/images/section3/icon-${i + 1}.png`}
                 width={84}
                 height={84}
                 alt={item.title}
-                className="float-end h-16 w-16 md:h-[84px] md:w-[84px]"
+                className="float-end h-16 w-16 h-[84px] w-[84px]"
               />
             </div>
           </div>
@@ -169,34 +157,38 @@ function DesktopSection6() {
 
       <div className="h-[150px] border-r" />
 
-      <div className="mt-[60px] grid grid-cols-2 bg-[#1e1e1e] gap-5">
-        {kpis.map((item, idx) => (
-          <div
-            key={item.title}
-            className={`col-span-1 w-full rounded-[18px] bg-white p-8 text-white md:p-12 sm:col-span-2 lg:col-span-1 lg:w-102.5 ${idx === 0 ? "" : "opacity-95"}`}>
-            <div className="relative flex flex-col gap-2">
-              <p className="font-archivo text-primary text-4xl font-extrabold leading-11 tracking-[-3px] md:text-[45px]">
-                {item.value.replace(/[+%]$/, "")}
-                {/[+%]$/.test(item.value) && (
-                  <sup className="absolute text-lg">{item.value.slice(-1)}</sup>
-                )}
-              </p>
-              <p className="text-bk text-lg font-bold leading-7 tracking-[-1px] md:text-[22px]">
-                {item.title}
+      <div className="bg-[#1e1e1e] px-[217.5px] py-[117.5px] w-full flex justify-center items-center">
+        <div className="grid grid-cols-2 bg-bk gap-5 w-full justify-center">
+          {kpis.map((item, idx) => (
+            <div
+              key={item.title}
+              className={`col-span-1 w-[410px] rounded-[18px] bg-white p-8 text-white p-12 col-span-1 ${idx === 0 ? "" : "opacity-95"}`}>
+              <div className="relative flex flex-col gap-2">
+                <p className="font-archivo text-primary text-4xl font-extrabold leading-11 tracking-[-3px] text-[45px]">
+                  {item.value.replace(/[+%]$/, "")}
+                  {/[+%]$/.test(item.value) && (
+                    <sup className="absolute text-lg">
+                      {item.value.slice(-1)}
+                    </sup>
+                  )}
+                </p>
+                <p className="text-bk text-lg font-bold leading-7 tracking-[-1px] text-[22px]">
+                  {item.title}
+                </p>
+              </div>
+              <div className="mt-7 w-full border-t border-primary" />
+              <p className="text-bk mt-10 text-right text-base font-medium">
+                {item.descPrefix}
+                <br />
+                <span className="text-primary">{item.descHighlight}</span>
+                {item.descSuffix}
               </p>
             </div>
-            <div className="mt-7 w-full border-t border-primary" />
-            <p className="text-bk mt-10 text-right text-base font-medium">
-              {item.descPrefix}
-              <br />
-              <span className="text-primary">{item.descHighlight}</span>
-              {item.descSuffix}
-            </p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
-      <button className="mt-8 w-full rounded-full bg-primary px-12.5 py-6.5 text-2xl font-semibold text-white transition-colors hover:bg-primary-dark md:mt-10 md:w-auto">
+      <button className="mt-8 w-full rounded-full bg-primary px-12.5 py-6.5 text-2xl font-semibold text-white transition-colors hover:bg-primary-dark mt-10 w-auto">
         지금 바로 문의하기
       </button>
     </section>
@@ -205,7 +197,7 @@ function DesktopSection6() {
 
 function DesktopSection7() {
   return (
-    <section className="bg-white py-[140px] text-center">
+    <section className="bg-white py-[140px] text-center px-[320px]">
       <p className="text-[48px] text-[30px] font-bold tracking-[-0.75px]">
         우리는 A부터 Z까지
         <br />
@@ -214,30 +206,43 @@ function DesktopSection7() {
 
       <div className="mt-[56px] grid grid-cols-3 gap-[20px]">
         <article className="rounded-[18px] px-[30px] py-[34px]">
-          <p className="font-archivo relative text-[4.25rem] text-[128px] font-extrabold leading-none tracking-[-3.8px]">
-            {"1000"}
-            <sup className="absolute text-lg text-[72px] font-bold">+</sup>
+          <p className="font-pretendard text-2xl font-bold text-primary text-left ml-3">
+            성공 사례
           </p>
-          <p className="text-bk mt-[10px] text-lg font-light">
+          <p className="pt-8 font-archivo relative text-[4.25rem] text-[128px] font-extrabold leading-none tracking-[-9.8px] text-left">
+            {"1000"}
+            <sup className="font-archivo absolute text-lg text-[72px] font-bold top-1">
+              +
+            </sup>
+          </p>
+          <p className="text-bk mt-[10px] text-lg text-left ml-3">
             중국 기업의 성공적인 한국 시장 진출을 지원
           </p>
         </article>
-        <article className="rounded-[18px] px-[30px] py-[34px]">
-          <p className="font-archivo relative text-[4.25rem] text-[128px] font-extrabold leading-none tracking-[-1.8px]">
-            {"100"}
-            <sup className="absolute text-lg text-[46px] font-bold">%</sup>
+        <article className="rounded-[18px] px-[30px] py-[34px] relative">
+          <p className="font-pretendard text-2xl font-bold text-primary text-left ml-3">
+            로컬 전문팀 보유
           </p>
-          <p className="text-bk mt-[10px] text-lg font-light">
+          <p className="relative pt-8 text-left font-archivo text-[4.25rem] text-[128px] font-extrabold leading-none tracking-[-9.8px]">
+            {"100"}
+            <sup className="absolute text-lg text-[46px] font-bold top-6">
+              %
+            </sup>
+          </p>
+          <p className="text-bk mt-2.5 text-lg text-left ml-3">
             중·한 이중 언어에 능통한 전문 인력 구성
           </p>
         </article>
         <article className="rounded-[18px] w-full relative rounded-[18px] px-[30px] py-[34px]">
+          <p className="font-pretendard text-2xl font-bold text-primary text-left ml-3">
+            인허가 원스톱 솔루션
+          </p>
           {/* 가운데 정렬 */}
-          <p className="absolute inset-0 flex items-center justify-center bottom-15 text-[300px]  font-archivo font-semibold">
+          <p className="top-8 absolute inset-0 flex items-center  bottom-15 text-[300px]  font-archivo font-semibold">
             {"∞"}
           </p>
           <div className="h-32" />
-          <p className="text-bk mt-[10px] text-lg font-light">
+          <p className="text-bk mt-[10px] text-lg text-left ml-3">
             안전한 영주권 설계 및 비자 발급
           </p>
         </article>
@@ -248,8 +253,8 @@ function DesktopSection7() {
 
 function DesktopSection8() {
   return (
-    <section className="bg-bk py-35 text-white flex justify-center">
-      <div className="relative min-w-[1280px] text-left">
+    <section className="bg-bk py-35  text-white flex justify-center">
+      <div className="relative min-w-[1920px] text-left px-80">
         <div className="relative isolate">
           <p className="absolute -top-15.5 z-0 font-archivo text-[100px] font-extrabold text-[#2F2E2E] tracking-[-2px]">
             About
@@ -296,7 +301,7 @@ function DesktopSection9({
   return (
     <section
       id="faq"
-      className="bg-white py-35 flex gap-54.75 min-w-[1280px] mx-auto ">
+      className="bg-white py-35 px-80 flex gap-54.75 min-w-[1920px] mx-auto ">
       <div className="relative isolate ">
         <p className="absolute -top-15.5 font-archivo text-[100px] font-extrabold text-[#F6F6F6] tracking-[-2px]">
           FAQ
@@ -342,7 +347,7 @@ function DesktopSection9({
 function DesktopSection10() {
   return (
     <section id="contact" className="bg-bk py-27.5 text-white">
-      <div className="min-w-[1280px] mx-auto flex justify-betwee gap-55.75">
+      <div className="min-w-[1920px] mx-auto flex justify-betwee gap-55.75 px-80">
         <div>
           <div className="relative isolate mt-39.25">
             <p className="absolute -top-15.5 z-0 font-archivo text-[110px] font-extrabold text-[#2F2E2E] tracking-[-2px]">
@@ -413,7 +418,7 @@ function DesktopSection11({
   onToggleAgree: () => void;
 }) {
   return (
-    <section className="bg-white px-[320px] py-[140px]">
+    <section className="bg-white px-80 py-[140px]">
       <h2 className="text-center text-[44px] font-bold tracking-[-1px]">
         간편 문의
       </h2>
@@ -529,25 +534,29 @@ export default function DesktopMain() {
   const [agree, setAgree] = useState(false);
 
   return (
-    <div className="hidden min-w-[1280px] md:block overflow-x-scroll">
+    <div className="hidden md:block">
       <DesktopSection1 />
-      <DesktopSection2 />
-      <DesktopSection3 />
-      <DesktopSection4 />
-      <DesktopSection5 />
-      <DesktopSection6 />
-      <DesktopSection7 />
-      <DesktopSection8 />
-      <DesktopSection9
-        faqOpen={faqOpen}
-        onToggle={(idx) => setFaqOpen(faqOpen === idx ? null : idx)}
-      />
-      <DesktopSection10 />
-      <DesktopSection11
-        agree={agree}
-        onToggleAgree={() => setAgree((prev) => !prev)}
-      />
-      <DesktopSection12 />
+      <div className="overflow-x-auto">
+        <div className="min-w-[1920px]">
+          <DesktopSection2 />
+
+          <DesktopSection4 />
+          <DesktopSection5 />
+          <DesktopSection6 />
+          <DesktopSection7 />
+          <DesktopSection8 />
+          <DesktopSection9
+            faqOpen={faqOpen}
+            onToggle={(idx) => setFaqOpen(faqOpen === idx ? null : idx)}
+          />
+          <DesktopSection10 />
+          <DesktopSection11
+            agree={agree}
+            onToggleAgree={() => setAgree((prev) => !prev)}
+          />
+          <DesktopSection12 />
+        </div>
+      </div>
     </div>
   );
 }
