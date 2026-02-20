@@ -1,123 +1,277 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 
-import {
-  contacts,
-  faqItems,
-  inquiryTypes,
-  kpis,
-  mobileServices,
-  steps,
-} from "./constants";
-import MobileTest from "./MobileTest";
+import { getMainContent, Locale } from "./locales";
 
-function MobileSection1() {
+type MobileNavId =
+  | "tools-mobile"
+  | "services-mobile"
+  | "proposal-mobile"
+  | "faq-mobile"
+  | "support-mobile"
+  | "request-mobile";
+
+type MobileSectionId =
+  | "tools-mobile"
+  | "intro-mobile"
+  | "services-mobile"
+  | "performance-mobile"
+  | "responsibility-mobile"
+  | "proposal-mobile"
+  | "faq-mobile"
+  | "support-mobile"
+  | "request-mobile"
+  | "footer-mobile";
+
+type SectionTone = "light" | "dark";
+
+const MOBILE_SECTION_CONFIG: Array<{
+  id: MobileSectionId;
+  nav: MobileNavId;
+  tone: SectionTone;
+}> = [
+  { id: "tools-mobile", nav: "tools-mobile", tone: "light" },
+  { id: "intro-mobile", nav: "tools-mobile", tone: "dark" },
+  { id: "services-mobile", nav: "services-mobile", tone: "light" },
+  { id: "performance-mobile", nav: "services-mobile", tone: "dark" },
+  { id: "responsibility-mobile", nav: "services-mobile", tone: "light" },
+  { id: "proposal-mobile", nav: "proposal-mobile", tone: "dark" },
+  { id: "faq-mobile", nav: "faq-mobile", tone: "light" },
+  { id: "support-mobile", nav: "support-mobile", tone: "dark" },
+  { id: "request-mobile", nav: "request-mobile", tone: "light" },
+  { id: "footer-mobile", nav: "request-mobile", tone: "light" },
+];
+
+const MOBILE_HEADER_OFFSET = 45;
+
+function MobileStickyHeader({
+  locale,
+  activeNav,
+  sectionTone,
+  onMoveSection,
+}: {
+  locale: Locale;
+  activeNav: MobileNavId;
+  sectionTone: SectionTone;
+  onMoveSection: (sectionId: MobileNavId) => void;
+}) {
+  const content = getMainContent(locale);
+
+  const navItems = [
+    { id: "tools-mobile", label: content.nav.tools },
+    { id: "services-mobile", label: content.nav.service },
+    { id: "proposal-mobile", label: content.nav.proposal },
+    { id: "faq-mobile", label: content.nav.faq },
+    { id: "support-mobile", label: content.nav.support },
+    { id: "request-mobile", label: content.nav.request },
+  ] as const;
+
+  const sectionBgClass = sectionTone === "dark" ? "bg-[#141414]" : "bg-white";
+
   return (
-    <section className="relative h-[667px] overflow-hidden bg-white px-[20px] pt-[210px]">
+    <div className={`fixed inset-x-0 top-0 z-40 transition-colors duration-200 ${sectionBgClass}`}>
+      <div className="mx-auto w-full max-w-[375px]">
+        <div className="overflow-x-auto border-b border-[#d86a6a] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex min-w-max">
+            {navItems.map((item) => {
+              const isActive = activeNav === item.id;
+
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => onMoveSection(item.id)}
+                  className={`h-[45px] shrink-0 px-2.5 font-pretendard text-[12px] font-bold tracking-[-0.3px] ${
+                    isActive ? "bg-primary text-white" : "bg-transparent text-primary"
+                  }`}>
+                  {item.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MobileSection1({ locale }: { locale: Locale }) {
+  const content = getMainContent(locale);
+
+  return (
+    <section
+      id="tools-mobile"
+      className="relative h-[667px] overflow-hidden bg-white px-[20px] pt-[210px]">
       <p className="pointer-events-none absolute left-1/2 top-[255px] -translate-x-1/2 text-center font-archivo text-[67px] font-extrabold leading-[1.08] tracking-[-1.6px] text-[#f2f2f2]">
         DDOBAGI
         <br />
         TOOLS
       </p>
       <h1 className="relative z-10 font-archivo text-[54px] font-extrabold leading-[1.05] tracking-[-1px] text-[#b53131]">
-        Korea
+        {content.hero.headingTop}
         <br />
-        Business Setup &
+        {content.hero.headingMid}
         <br />
-        Entry Consulting
+        {content.hero.headingBottom}
       </h1>
     </section>
   );
 }
 
-function MobileSection2() {
+function MobileSection2({ locale }: { locale: Locale }) {
+  const content = getMainContent(locale);
+
   return (
-    <section className="bg-[#141414] px-[20px] py-[80px] text-center text-white">
+    <section
+      id="intro-mobile"
+      className="bg-[#141414] px-[20px] py-[80px] text-center text-white">
       <p className="font-archivo text-[14px] font-extrabold tracking-[-0.35px] text-[#b53131]">
-        DDOBAGI TOOLS ONE-STOP SOLUTION
+        {content.oneStop.eyebrow}
       </p>
       <p className="mt-[28px] text-[15px] font-light leading-[1.3] tracking-[-0.37px]">
-        맞춤형 컨설팅과 함께
+        {content.oneStop.line1}
         <br />
-        나만의 회사를 설립해보세요
+        {content.oneStop.line2}
       </p>
       <h2 className="mt-[14px] text-[24px] font-bold leading-[1.3] tracking-[-0.6px]">
-        단 25일 이내 완성!
+        {content.oneStop.highlight}
       </h2>
       <p className="mt-[14px] text-[15px] font-light leading-[1.3] tracking-[-0.37px]">
-        한국 법인 설립부터
+        {content.oneStop.line3}
         <br />
-        내가 원하는 플랫폼 어디든 입점 가능
+        {content.oneStop.line4}
       </p>
-      <p className="mt-[38px] text-[12px] leading-[1.5] tracking-[-0.3px]">
-        고객에 공감하고 상황과 니즈에 맞춰
-        <br />
-        현지 정착 솔루션을 제공합니다.
+      <p className="mt-[38px] whitespace-pre-line text-[12px] leading-[1.5] tracking-[-0.3px]">
+        {content.oneStop.desc}
       </p>
     </section>
   );
 }
 
-function MobileSection3() {
+function MobileSection3({ locale }: { locale: Locale }) {
+  const content = getMainContent(locale);
+
   return (
-    // <section className="bg-white px-[20px] py-[80px]">
-    //   <p className="font-archivo text-[17px] font-extrabold leading-[1.1] tracking-[-0.42px]">
-    //     DDOBAGI TOOLS
-    //   </p>
-    //   <h2 className="font-archivo mt-[18px] text-[39px] font-extrabold leading-[1.1] tracking-[-0.97px] text-[#b53131]">
-    //     What
-    //     <br />
-    //     We DO
-    //   </h2>
-    //   <div className="mt-[30px] space-y-[14px]">
-    //     {mobileServices.map((item, idx) => (
-    //       <article key={item.title} className="rounded-[14px] bg-[#f5f5f5] p-[20px]">
-    //         <div className="flex items-start justify-between gap-4">
-    //           <h3 className="text-[19px] font-bold leading-[1.4] tracking-[-0.49px] text-[#141414]">
-    //             {item.title}
-    //           </h3>
-    //           <div className="h-[46px] w-[46px] rounded-full bg-[#ececec]" />
-    //         </div>
-    //         <div className="mt-[14px] rounded-[12px] bg-[#b53131] p-[16px] text-white">
-    //           <p className="text-[14px] font-medium leading-[1.5] tracking-[-0.35px]">
-    //             {item.desc}
-    //           </p>
-    //           {item.badge && (
-    //             <span className="mt-[10px] inline-flex rounded-[100px] bg-[#971e1e] px-[8px] py-[2px] text-[11px] font-semibold tracking-[-0.27px]">
-    //               {item.badge}
-    //             </span>
-    //           )}
-    //         </div>
-    //         {idx < mobileServices.length - 1 && <div className="pt-[4px]" />}
-    //       </article>
-    //     ))}
-    //   </div>
-    // </section>
-    <MobileTest />
+    <section
+      id="services-mobile"
+      className="min-h-screen bg-white px-5 py-20 flex justify-center">
+      <div className="w-full max-w-[375px] flex flex-col gap-3">
+        <header className="pb-[18px] rounded-[10.8px] flex flex-col gap-[18px]">
+          <h1 className="text-[#141414] text-[16.8px] font-black font-['Archivo_Semi_Expanded'] tracking-wide">
+            {content.services.eyebrow}
+          </h1>
+          <h2 className="text-[#b53131] text-[39px] font-black font-['Archivo_Semi_Expanded'] leading-tight">
+            {content.services.titleTop}
+            <br />
+            {content.services.titleBottom}
+          </h2>
+        </header>
+
+        <div className="flex flex-col gap-8">
+          {content.services.mobileCards.map((card) => (
+            <ServiceCard
+              key={`${card.title}-${card.subtitle}`}
+              title={card.title}
+              subtitle={card.subtitle}
+              iconSrc={card.iconSrc}
+              description={card.description}
+              details={card.details}
+              showDetails={card.showDetails}
+              badgeLabel={
+                locale === "ko"
+                  ? "기본구성"
+                  : locale === "en"
+                    ? "Base Package"
+                    : "基础配置"
+              }
+            />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
-function MobileSection4() {
+type ServiceCardProps = {
+  title: string;
+  subtitle: string;
+  iconSrc: string;
+  description: string;
+  details?: string;
+  showDetails?: boolean;
+  badgeLabel: string;
+};
+
+function ServiceCard({
+  title,
+  subtitle,
+  iconSrc,
+  description,
+  details,
+  showDetails = true,
+  badgeLabel,
+}: ServiceCardProps) {
   return (
-    <section className="bg-[#141414] px-[20px] py-[80px] text-white">
+    <div className="w-full flex flex-col gap-0">
+      <div className="w-full p-7 bg-neutral-100 rounded-t-[14.71px] flex justify-between items-center">
+        <h3 className="text-[#141414] text-xl font-bold font-['Pretendard'] leading-tight">
+          {title}
+          <br />
+          {subtitle}
+        </h3>
+        <div className="w-[68.63px] h-[68.63px] relative flex items-center justify-center flex-shrink-0">
+          <img
+            src={iconSrc}
+            alt={`${title} ${subtitle}`}
+            className="max-w-full max-h-full object-contain"
+          />
+        </div>
+      </div>
+
+      <div className="w-full p-7 bg-[#b53131] rounded-b-[14.71px] flex flex-col gap-6">
+        <p className="text-white text-base font-medium font-['Pretendard'] leading-relaxed">
+          {description}
+        </p>
+        {showDetails && details && (
+          <div className="flex flex-col gap-[6.54px]">
+            <div className="px-[6.54px] py-[1.63px] bg-[#961d1d] rounded-[81.71px] inline-flex justify-center items-center self-start">
+              <span className="text-white text-xs font-semibold font-['Pretendard']">
+                {badgeLabel}
+              </span>
+            </div>
+            <p className="text-white text-xs font-normal font-['Pretendard'] leading-relaxed">
+              {details}
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function MobileSection4({ locale }: { locale: Locale }) {
+  const content = getMainContent(locale);
+
+  return (
+    <section
+      id="performance-mobile"
+      className="bg-[#141414] px-[20px] py-[80px] text-white">
       <p className="font-archivo text-[20px] font-extrabold tracking-[-0.5px] text-[#b53131]">
-        DDOBAGI TOOLS
+        {content.performance.eyebrow}
       </p>
       <h2 className="font-archivo mt-[8px] text-[41px] font-extrabold leading-[1.1] tracking-[-1.03px]">
-        Our Service
+        {content.performance.title}
       </h2>
       <p className="mt-[22px] text-[26px] font-bold leading-[1.2] tracking-[-0.65px]">
-        수백 건 이상의 외국 법인 설립 실적
+        {content.performance.subtitle}
       </p>
       <p className="mt-[14px] text-[14px] leading-[1.5] tracking-[-0.35px] text-[#d7d7d7]">
-        이미 수많은 외국인 사업가들이 한국 시장에 진출할 때
-        <br />
-        저희를 선택했습니다.
+        {content.performance.description}
       </p>
       <div className="mt-[32px] flex flex-col gap-5">
-        {kpis.map((item, idx) => (
+        {content.performance.kpis.map((item, idx) => (
           <article
             key={item.title}
             className={`rounded-[14px] bg-white p-[16px] ${idx === 0 ? "col-span-2" : "col-span-1"}`}>
@@ -141,66 +295,65 @@ function MobileSection4() {
   );
 }
 
-function MobileSection5() {
+function MobileSection5({ locale }: { locale: Locale }) {
+  const content = getMainContent(locale);
+  const [item1, item2, item3] = content.responsibility.items;
+
   return (
-    <section className="bg-white px-[20px] py-[80px] text-center">
-      <p className="text-[48px] text-[30px] font-bold tracking-[-0.75px]">
-        우리는 A부터 Z까지
+    <section id="responsibility-mobile" className="bg-white px-[20px] py-[80px] text-center">
+      <p className="text-[30px] font-bold tracking-[-0.75px]">
+        {content.responsibility.titleTop}
         <br />
-        <span className="text-primary">모든 과정을 책임집니다</span>
+        <span className="text-primary">{content.responsibility.titleBottom}</span>
       </p>
       <div className="mt-[24px] space-y-[12px]">
         <article className="rounded-[14px] bg-[#f5f5f5] px-[20px] py-[18px]">
           <p className="font-archivo text-[48px] font-extrabold leading-none tracking-[-1px] text-[#141414]">
-            1000+
+            {item1.value}
           </p>
-          <p className="mt-[8px] text-[14px] text-[#5b5b5b]">누적 프로젝트</p>
+          <p className="mt-[8px] text-[14px] text-[#5b5b5b]">{item1.desc}</p>
         </article>
         <article className="rounded-[14px] bg-[#f5f5f5] px-[20px] py-[18px]">
           <p className="font-archivo text-[48px] font-extrabold leading-none tracking-[-1px] text-[#141414]">
-            100%
+            {item2.value}
           </p>
-          <p className="mt-[8px] text-[14px] text-[#5b5b5b]">
-            맞춤형 운영 전략
-          </p>
+          <p className="mt-[8px] text-[14px] text-[#5b5b5b]">{item2.desc}</p>
         </article>
         <article className="rounded-[14px] bg-[#f5f5f5] px-[20px] py-[18px]">
           <p className="font-archivo text-[48px] font-extrabold leading-none tracking-[-1px] text-[#b53131]">
-            ∞
+            {item3.value}
           </p>
-          <p className="mt-[8px] text-[14px] text-[#5b5b5b]">
-            지속 성장 파트너십
-          </p>
+          <p className="mt-[8px] text-[14px] text-[#5b5b5b]">{item3.desc}</p>
         </article>
       </div>
     </section>
   );
 }
 
-function MobileSection6() {
+function MobileSection6({ locale }: { locale: Locale }) {
+  const content = getMainContent(locale);
+
   return (
-    <section className="bg-[#141414] px-[20px] py-[80px] text-white">
+    <section id="proposal-mobile" className="bg-[#141414] px-[20px] py-[80px] text-white">
       <p className="font-archivo text-[20px] font-extrabold tracking-[-0.5px] text-[#b53131]">
-        DDOBAGI TOOLS
+        {content.services.eyebrow}
       </p>
       <h2 className="mt-[8px] text-[30px] font-bold tracking-[-0.75px]">
-        ONE-STOP SOLUTIONS에 의한
+        {content.about.mobileHeading}
       </h2>
       <p className="mt-[8px] text-[15px] text-[#bfbfbf]">
-        복잡한 비즈니스 과정도 쉽고 빠르게
+        {content.about.mobileDescription}
       </p>
       <div className="mt-[24px] space-y-[12px]">
-        {steps.map((item, idx) => (
+        {content.about.steps.map((item, idx) => (
           <article
             key={item.title}
             className="rounded-[14px] border border-[#4f4f4f] bg-[#212121] p-[20px]">
-            <p className="text-[14px] font-semibold text-[#b53131]">
-              0{idx + 1}
-            </p>
+            <p className="text-[14px] font-semibold text-[#b53131]">0{idx + 1}</p>
             <h3 className="font-archivo mt-[8px] text-[24px] font-bold leading-[1.1]">
               {item.title}
             </h3>
-            <p className="mt-[10px] text-[14px] leading-[1.5] text-[#d2d2d2]">
+            <p className="mt-[10px] whitespace-pre-line text-[14px] leading-[1.5] text-[#d2d2d2]">
               {item.desc}
             </p>
           </article>
@@ -213,17 +366,21 @@ function MobileSection6() {
 function MobileSection7({
   faqOpen,
   onToggle,
+  locale,
 }: {
   faqOpen: number | null;
   onToggle: (index: number) => void;
+  locale: Locale;
 }) {
+  const content = getMainContent(locale);
+
   return (
     <section id="faq-mobile" className="bg-white px-[20px] py-[80px]">
       <h2 className="text-center text-[30px] font-bold tracking-[-0.75px]">
-        자주 묻는 질문
+        {content.faq.title}
       </h2>
       <div className="mt-[28px] space-y-[10px]">
-        {faqItems.map((item, idx) => (
+        {content.faq.items.map((item, idx) => (
           <article
             key={item.q}
             className="rounded-[14px] bg-[#f5f5f5] px-[16px] py-[14px]">
@@ -251,24 +408,24 @@ function MobileSection7({
   );
 }
 
-function MobileSection8() {
+function MobileSection8({ locale }: { locale: Locale }) {
+  const content = getMainContent(locale);
+
   return (
     <section
-      id="contact-mobile"
+      id="support-mobile"
       className="bg-[#141414] px-[20px] py-[80px] text-white">
       <p className="font-archivo text-[50px] font-black leading-none tracking-[-1.2px] text-[#2f2e2e]">
-        Contact
+        {content.contact.bgTitle}
       </p>
-      <h2 className="mt-[-10px] text-[24px] font-bold leading-[1.35] tracking-[-0.6px]">
-        또바기툴즈는
-        <br />
-        항상 준비되어 있습니다.
+      <h2 className="mt-[-10px] whitespace-pre-line text-[24px] font-bold leading-[1.35] tracking-[-0.6px]">
+        {content.contact.heading}
       </h2>
       <button className="mt-[22px] rounded-[100px] bg-[#b53131] px-[26px] py-[12px] text-[13px] font-semibold tracking-[-0.3px]">
-        문의하기
+        {content.contact.cta}
       </button>
       <div className="mt-[22px] space-y-[12px]">
-        {contacts.map((person) => (
+        {content.contact.contacts.map((person) => (
           <article
             key={person.en}
             className="rounded-[14px] border border-[#5a5a5a] bg-[#212121] p-[16px]">
@@ -278,7 +435,7 @@ function MobileSection8() {
                   {person.en}
                 </p>
                 <p className="mt-[4px] text-[22px] tracking-[-0.5px]">
-                  {person.ko} <span className="text-[13px]">{person.role}</span>
+                  {person.localName} <span className="text-[13px]">{person.role}</span>
                 </p>
               </div>
               <img
@@ -289,19 +446,19 @@ function MobileSection8() {
             </div>
             <div className="mt-[12px] grid grid-cols-2 gap-y-[8px] text-[12px] tracking-[-0.3px]">
               <p>
-                <strong className="font-medium">Phone </strong>
+                <strong className="font-medium">{content.contact.fields.phone} </strong>
                 {person.phone}
               </p>
               <p>
-                <strong className="font-medium">Wechat </strong>
+                <strong className="font-medium">{content.contact.fields.wechat} </strong>
                 {person.wechat}
               </p>
               <p>
-                <strong className="font-medium">Tell </strong>
+                <strong className="font-medium">{content.contact.fields.tell} </strong>
                 {person.tell}
               </p>
               <p>
-                <strong className="font-medium">Kakao </strong>
+                <strong className="font-medium">{content.contact.fields.kakao} </strong>
                 {person.kakao}
               </p>
             </div>
@@ -315,25 +472,29 @@ function MobileSection8() {
 function MobileSection9({
   agree,
   onToggleAgree,
+  locale,
 }: {
   agree: boolean;
   onToggleAgree: () => void;
+  locale: Locale;
 }) {
+  const content = getMainContent(locale);
+
   return (
-    <section className="bg-white px-[20px] py-[80px]">
+    <section id="request-mobile" className="bg-white px-[20px] py-[80px]">
       <h2 className="text-center text-[23px] font-bold tracking-[-0.57px]">
-        간편 문의
+        {content.inquiry.title}
       </h2>
       <form className="mt-[30px] flex flex-col gap-[18px]">
         <label className="flex flex-col gap-[8px]">
-          <span className="text-[14px] font-semibold">문의 종류</span>
+          <span className="text-[14px] font-semibold">{content.inquiry.type}</span>
           <select
             className="h-[44px] rounded-[4px] bg-[#f5f5f5] px-[14px] text-[12px] text-[#808080] outline-none"
             defaultValue="">
             <option value="" disabled>
-              선택해주세요
+              {content.inquiry.typePlaceholder}
             </option>
-            {inquiryTypes.map((type) => (
+            {content.inquiry.types.map((type) => (
               <option key={type} value={type}>
                 {type}
               </option>
@@ -341,24 +502,24 @@ function MobileSection9({
           </select>
         </label>
         <label className="flex flex-col gap-[8px]">
-          <span className="text-[14px] font-semibold">이름</span>
+          <span className="text-[14px] font-semibold">{content.inquiry.name}</span>
           <input
             className="h-[44px] rounded-[4px] bg-[#f5f5f5] px-[14px] text-[12px] outline-none"
-            placeholder="이름을 입력해주세요"
+            placeholder={content.inquiry.namePlaceholder}
           />
         </label>
         <label className="flex flex-col gap-[8px]">
-          <span className="text-[14px] font-semibold">연락처</span>
+          <span className="text-[14px] font-semibold">{content.inquiry.contact}</span>
           <input
             className="h-[44px] rounded-[4px] bg-[#f5f5f5] px-[14px] text-[12px] outline-none"
-            placeholder="연락 가능한 이메일 또는 전화번호"
+            placeholder={content.inquiry.contactPlaceholder}
           />
         </label>
         <label className="flex flex-col gap-[8px]">
-          <span className="text-[14px] font-semibold">문의 내용</span>
+          <span className="text-[14px] font-semibold">{content.inquiry.message}</span>
           <textarea
             className="h-[174px] resize-none rounded-[4px] bg-[#f5f5f5] px-[14px] py-[14px] text-[12px] outline-none"
-            placeholder="궁금한 내용을 자세히 적어주세요"
+            placeholder={content.inquiry.messagePlaceholder}
           />
         </label>
         <button
@@ -366,25 +527,30 @@ function MobileSection9({
           onClick={onToggleAgree}
           className="flex items-start gap-[6px] text-left text-[12px] leading-[1.5] text-[#141414]">
           <span
-            className={`mt-[2px] flex h-[12px] w-[12px] items-center justify-center rounded-[2px] border text-[10px] ${agree ? "border-[#141414] bg-[#141414] text-white" : "border-[#808080] bg-white text-transparent"}`}>
+            className={`mt-[2px] flex h-[12px] w-[12px] items-center justify-center rounded-[2px] border text-[10px] ${
+              agree
+                ? "border-[#141414] bg-[#141414] text-white"
+                : "border-[#808080] bg-white text-transparent"
+            }`}>
             ✓
           </span>
-          개인정보 수집 및 이용에 동의합니다. 수집된 정보는 문의 답변 목적으로만
-          사용되며, 법정 보유기간 동안 안전하게 보관됩니다.
+          {content.inquiry.consent}
         </button>
         <button
           type="submit"
           className="mx-auto mt-[4px] rounded-[100px] bg-[#797979] px-[26px] py-[13px] text-[12px] font-semibold tracking-[-0.3px] text-white">
-          문의 보내기
+          {content.inquiry.submit}
         </button>
       </form>
     </section>
   );
 }
 
-function MobileSection10() {
+function MobileSection10({ locale }: { locale: Locale }) {
+  const content = getMainContent(locale);
+
   return (
-    <footer className="bg-[#f5f5f5] px-[20px] pb-[40px] pt-[26px]">
+    <footer id="footer-mobile" className="bg-[#f5f5f5] px-[20px] pb-[40px] pt-[26px]">
       <div className="flex items-center justify-between border-b border-[#141414] pb-[20px]">
         <Image
           src="/main/ddobagi-tools.png"
@@ -393,47 +559,102 @@ function MobileSection10() {
           alt="ddobagi tools"
         />
         <div className="flex items-center gap-[16px] text-[12px] font-bold text-[#363636]">
-          <span>서비스 이용약관</span>
-          <span>개인정보처리방침</span>
+          <span>{content.footer.terms}</span>
+          <span>{content.footer.privacy}</span>
         </div>
       </div>
       <div className="mt-[12px] space-y-[8px] text-[12px] tracking-[-0.3px] text-[#141414]">
         <p>
-          <strong>사업자등록번호.</strong> 684-81-03181
+          <strong>{content.footer.businessNo}</strong> 684-81-03181
         </p>
         <p>
-          <strong>주소.</strong> 서울특별시 마포구 양화로 78-7, 3층
+          <strong>{content.footer.address}</strong> 서울특별시 마포구 양화로 78-7, 3층
         </p>
         <p>
-          <strong>이메일.</strong> ddobagitools@naver.com
+          <strong>{content.footer.email}</strong> ddobagitools@naver.com
         </p>
       </div>
     </footer>
   );
 }
 
-export default function MobileMain() {
+export default function MobileMain({ locale }: { locale: Locale }) {
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
   const [agree, setAgree] = useState(false);
+  const [activeNav, setActiveNav] = useState<MobileNavId>("tools-mobile");
+  const [sectionTone, setSectionTone] = useState<SectionTone>("light");
+
+  const navSectionIds = useMemo<MobileNavId[]>(
+    () => ["tools-mobile", "services-mobile", "proposal-mobile", "faq-mobile", "support-mobile", "request-mobile"],
+    [],
+  );
+
+  useEffect(() => {
+    const updateActiveSection = () => {
+      const scrollPoint = window.scrollY + MOBILE_HEADER_OFFSET + 20;
+      let current = MOBILE_SECTION_CONFIG[0];
+
+      MOBILE_SECTION_CONFIG.forEach((sectionInfo) => {
+        const section = document.getElementById(sectionInfo.id);
+
+        if (section && scrollPoint >= section.offsetTop) {
+          current = sectionInfo;
+        }
+      });
+
+      setActiveNav(current.nav);
+      setSectionTone(current.tone);
+    };
+
+    updateActiveSection();
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", updateActiveSection);
+
+    return () => {
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+    };
+  }, [navSectionIds]);
+
+  const handleMoveSection = (sectionId: MobileNavId) => {
+    const section = document.getElementById(sectionId);
+
+    if (!section) {
+      return;
+    }
+
+    const top = section.getBoundingClientRect().top + window.scrollY - MOBILE_HEADER_OFFSET;
+    window.scrollTo({ top, behavior: "smooth" });
+  };
 
   return (
     <div className="mx-auto w-full max-w-[375px] md:hidden">
-      <MobileSection1 />
-      <MobileSection2 />
-      <MobileSection3 />
-      <MobileSection4 />
-      <MobileSection5 />
-      <MobileSection6 />
-      <MobileSection7
-        faqOpen={faqOpen}
-        onToggle={(idx) => setFaqOpen(faqOpen === idx ? null : idx)}
+      <MobileStickyHeader
+        locale={locale}
+        activeNav={activeNav}
+        sectionTone={sectionTone}
+        onMoveSection={handleMoveSection}
       />
-      <MobileSection8 />
-      <MobileSection9
-        agree={agree}
-        onToggleAgree={() => setAgree((prev) => !prev)}
-      />
-      <MobileSection10 />
+      <div className="pt-[45px]">
+        <MobileSection1 locale={locale} />
+        <MobileSection2 locale={locale} />
+        <MobileSection3 locale={locale} />
+        <MobileSection4 locale={locale} />
+        <MobileSection5 locale={locale} />
+        <MobileSection6 locale={locale} />
+        <MobileSection7
+          locale={locale}
+          faqOpen={faqOpen}
+          onToggle={(idx) => setFaqOpen(faqOpen === idx ? null : idx)}
+        />
+        <MobileSection8 locale={locale} />
+        <MobileSection9
+          locale={locale}
+          agree={agree}
+          onToggleAgree={() => setAgree((prev) => !prev)}
+        />
+        <MobileSection10 locale={locale} />
+      </div>
     </div>
   );
 }

@@ -1,64 +1,135 @@
 "use client";
 
-import { useState } from "react";
+import { RefObject, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 
-import {
-  contacts,
-  desktopServices,
-  faqItems,
-  inquiryTypes,
-  kpis,
-  steps,
-} from "./constants";
+import { getMainContent, Locale, SUPPORTED_LOCALES } from "./locales";
 
-function DesktopSection1() {
+function DesktopSection1({ locale }: { locale: Locale }) {
+  const [isLangOpen, setIsLangOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+  const content = getMainContent(locale);
+
+  const currentPrefix = useMemo(() => {
+    const first = pathname?.split("/").filter(Boolean)[0];
+    return SUPPORTED_LOCALES.includes(first as Locale)
+      ? (first as Locale)
+      : null;
+  }, [pathname]);
+
+  const changeLocale = (nextLocale: Locale) => {
+    const segments = pathname?.split("/").filter(Boolean) ?? [];
+
+    if (currentPrefix) {
+      segments[0] = nextLocale;
+      router.push(`/${segments.join("/")}`);
+    } else {
+      router.push(`/${nextLocale}`);
+    }
+
+    setIsLangOpen(false);
+  };
+
   return (
-    <header className="flex h-[96px] items-center justify-between border-b border-[#ebebeb] px-[320px]">
-      <Image
-        src={"/icons/logo.svg"}
-        width={139}
-        height={50}
-        alt="로고 이미지"
-      />
-      <nav className="flex items-center gap-[44px] font-semibold tracking-[-0.4px] text-primary">
-        <a href="#services">또바기툴즈</a>
-        <a href="#about">서비스</a>
-        <a href="#faq">자사 제안서</a>
-        <a href="#contact">작업 의뢰</a>
-        <a href="#contact">고객센터</a>
-        <a href="#contact">FAQ</a>
-        <a href="#contact">
-          <Image
-            src="/icons/global.svg"
-            width={24}
-            height={24}
-            alt="글로벌 아이콘"
-          />{" "}
-          KR
-        </a>
-      </nav>
+    <header className="h-[96px] border-b border-[#ebebeb]">
+      <div className="flex h-full mx-auto max-w-[1280px] items-center justify-between">
+        <Image src="/icons/logo.svg" width={139} height={50} alt="logo" />
+
+        <nav className="flex items-center gap-10 font-semibold tracking-[-0.4px] text-primary">
+          <a href="#services">{content.nav.tools}</a>
+          <a href="#about">{content.nav.service}</a>
+          <a href="#services">{content.nav.proposal}</a>
+          <a href="#contact">{content.nav.request}</a>
+          <a href="#contact">{content.nav.support}</a>
+          <a href="#faq">{content.nav.faq}</a>
+
+          <div className="relative">
+            <button
+              type="button"
+              className="flex items-center gap-2"
+              onClick={() => setIsLangOpen((prev) => !prev)}>
+              <Image
+                src="/icons/global.svg"
+                width={24}
+                height={24}
+                alt="language"
+              />
+              <span>{content.langLabel}</span>
+              <Image
+                src="/icons/arrow-top.svg"
+                width={16}
+                height={16}
+                alt="toggle"
+                className={`transition-transform ${isLangOpen ? "" : "rotate-180"}`}
+              />
+            </button>
+
+            {isLangOpen && (
+              <div className="absolute -left-5 top-11 z-20 w-31.5 rounded-[20px] bg-white p-1 shadow-[0_14px_40px_rgba(0,0,0,0.12)]">
+                {SUPPORTED_LOCALES.map((item) => {
+                  const selected = locale === item;
+                  const label = getMainContent(item).langLabel;
+
+                  return (
+                    <button
+                      key={item}
+                      type="button"
+                      onClick={() => changeLocale(item)}
+                      className={`flex w-full items-center justify-between rounded-2xl p-4 text-[16px] leading-none ${
+                        selected ? "bg-[#e6d3d3]" : "bg-transparent"
+                      }`}>
+                      <span>{label}</span>
+                      {selected && <span className="text-[16px]">✓</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </nav>
+      </div>
     </header>
   );
 }
 
-function DesktopSection2() {
-  return (
-    <section className="relative h-[760px] overflow-hidden bg-white">
-      <p className="pointer-events-none absolute left-1/2 top-[40px] -translate-x-1/2 font-archivo text-[170px] font-extrabold leading-[0.88] tracking-[-3px] text-[#f2f2f2]">
-        DDOBAGI
-        <br />
-        TOOLS
-      </p>
+function DesktopSection2({
+  locale,
+  sectionRef,
+  heroTransition,
+}: {
+  locale: Locale;
+  sectionRef: RefObject<HTMLElement | null>;
+  heroTransition: number;
+}) {
+  const content = getMainContent(locale);
+  const section2Transition = Math.max(0, (heroTransition - 0.45) / 0.55);
 
-      <div className="absolute left-1/2 top-[50%] w-full -translate-x-1/2 -translate-y-1/2 px-[160px] text-center">
-        <h1 className="font-archivo text-[88px] font-extrabold leading-[0.94] tracking-[-2px] text-[#b53131]">
-          Korea
+  return (
+    <section
+      ref={sectionRef}
+      className="relative bg-white text-[#f6f6f6] overflow-hidden">
+      <div className="px-5 md:px-0">
+        <p className="pointer-events-none select-none text-center text-[13vw] md:text-[15vw] font-archivo font-extrabold text-[#f6f6f6] leading-none">
+          DDOBAGI
           <br />
-          Business Setup &
-          <br />
-          Entry Consulting
-        </h1>
+          TOOLS
+        </p>
+        <div
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-4"
+          style={{
+            transform: `translate(-50%, calc(-50% + ${section2Transition * 180}px))`,
+            opacity: Math.max(0, 1 - section2Transition * 1.2),
+          }}>
+          <p className="font-archivo text-[#B53131] text-[40px] md:text-[80px] lg:text-[120px] leading-[110%] text-center font-extrabold break-keep">
+            <span>{content.hero.headingTop}</span>
+            <br />
+            <span>{content.hero.headingMid}</span>
+            <br />
+            <span>{content.hero.headingBottom}</span>
+          </p>
+        </div>
       </div>
 
       <Image
@@ -72,59 +143,104 @@ function DesktopSection2() {
   );
 }
 
-function DesktopSection4() {
+function DesktopSection3({
+  locale,
+  sectionRef,
+  heroTransition,
+}: {
+  locale: Locale;
+  sectionRef: RefObject<HTMLElement | null>;
+  heroTransition: number;
+}) {
+  const content = getMainContent(locale);
+
   return (
-    <section className="bg-bk px-[320px] py-[136px] text-white">
-      <p className="text-sm font-archivo text-[#B53131] opacity-80 text-xl text-[28px] font-extrabold">
-        DDOBAGI TOOLS ONE-STOP SOLUTION
+    <section
+      ref={sectionRef}
+      className="relative h-[640px] overflow-hidden bg-bk flex items-center justify-center">
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="absolute inset-0 h-full w-full object-cover"
+        src="/videos/wave.mp4"
+      />
+
+      <div
+        className="relative z-10 text-center transition-all duration-75"
+        style={{
+          transform: `translateY(${(1 - heroTransition) * -140}px)`,
+          opacity: Math.min(1, heroTransition * 1.35),
+        }}>
+        <h2 className="font-archivo text-[88px] font-extrabold leading-[0.94] tracking-[-2px] text-white drop-shadow-[0_10px_24px_rgba(0,0,0,0.45)]">
+          {content.hero.headingTop}
+          <br />
+          {content.hero.headingMid}
+          <br />
+          {content.hero.headingBottom}
+        </h2>
+      </div>
+    </section>
+  );
+}
+
+function DesktopSection4({ locale }: { locale: Locale }) {
+  const content = getMainContent(locale);
+
+  return (
+    <section className="bg-bk py-[136px] text-center text-white">
+      <p className="font-archivo text-[28px] font-extrabold text-[#B53131] opacity-80">
+        {content.oneStop.eyebrow}
       </p>
-      <p className="mt-4 text-xl font-light opacity-80 break-keep mt-15 text-2xl text-[30px]">
-        맞춤형 건설팅과 함께
-        <br className="hidden block" /> 나만의 회사를 설립해보세요
+      <p className="mt-15 text-[30px] font-light opacity-80 break-keep">
+        {content.oneStop.line1}
+        <br /> {content.oneStop.line2}
       </p>
-      <h2 className="mt-6 text-3xl font-extrabold mt-7.5 text-4xl text-[48px]">
-        단 25일 이내 완성!
+      <h2 className="mt-7.5 text-[48px] font-extrabold">
+        {content.oneStop.highlight}
       </h2>
-      <p className="mt-6 text-lg font-light opacity-80 break-keep mt-7.5 text-2xl text-[30px]">
-        한국 법인 설립부터
-        <br className="hidden block" /> 내가 원하는 플랫폼 어디든 입점 가능
+      <p className="mt-7.5 text-[30px] font-light opacity-80 break-keep">
+        {content.oneStop.line3}
+        <br /> {content.oneStop.line4}
       </p>
 
-      <p className="mt-10 text-base opacity-80 break-keep mt-19.5 text-lg text-[19px]">
-        고객에 공감하고 상황과 니즈에 맞춰
-        <br className="hidden block" /> 현지 정착 솔루션을 제공합니다.
+      <p className="mt-19.5 text-[19px] opacity-80 break-keep whitespace-pre-line">
+        {content.oneStop.desc}
       </p>
     </section>
   );
 }
 
-function DesktopSection5() {
+function DesktopSection5({ locale }: { locale: Locale }) {
+  const content = getMainContent(locale);
+
   return (
-    <section id="services" className="bg-white px-[320px] py-[140px]">
-      <div className="grid grid-cols-1 gap-6 grid-cols-2 gap-6.25 grid-cols-3">
-        <div className="mb-8 mb-0">
-          <p className="font-archivo text-xl font-extrabold spacing tracking-[-0.7px] text-2xl text-[28px]">
-            DDOBAGI TOOLS
+    <section id="services" className="bg-white py-[140px]">
+      <div className="mx-auto grid max-w-[1280px] grid-cols-1 gap-6 grid-cols-2 gap-6.25 grid-cols-3">
+        <div className="mb-0">
+          <p className="font-archivo text-[28px] font-extrabold tracking-[-0.7px]">
+            {content.services.eyebrow}
           </p>
-          <h2 className="font-archivo mb-4 text-4xl font-extrabold leading-[1.1] tracking-[-1.625px] text-[#B53131] mb-12 text-5xl text-[65px]">
-            What
+          <h2 className="font-archivo mb-12 text-[65px] font-extrabold leading-[1.1] tracking-[-1.625px] text-[#B53131]">
+            {content.services.titleTop}
             <br />
-            We DO
+            {content.services.titleBottom}
           </h2>
         </div>
 
-        {desktopServices.map((item, i) => (
+        {content.services.desktopItems.map((item, i) => (
           <div
             key={item.title}
-            className="flex flex-col gap-6 rounded-[18px] bg-[#f9f9f9] p-8 gap-10.5 p-12">
-            <h3 className="text-lg font-bold text-lg text-xl">{item.title}</h3>
+            className="flex flex-col gap-10.5 rounded-[18px] bg-[#f9f9f9] p-12">
+            <h3 className="text-xl font-bold">{item.title}</h3>
             <div className="w-full">
               <Image
                 src={`/images/section3/icon-${i + 1}.png`}
                 width={84}
                 height={84}
                 alt={item.title}
-                className="float-end h-16 w-16 h-[84px] w-[84px]"
+                className="float-end h-[84px] w-[84px]"
               />
             </div>
           </div>
@@ -134,37 +250,38 @@ function DesktopSection5() {
   );
 }
 
-function DesktopSection6() {
+function DesktopSection6({ locale }: { locale: Locale }) {
+  const content = getMainContent(locale);
+
   return (
     <section
       id="about"
-      className="flex flex-col items-center gap-25 bg-[#141414] px-[320px] py-[150px] text-white">
+      className="flex flex-col items-center gap-25 bg-[#141414] py-[150px] text-white">
       <div className="text-center">
         <p className="font-archivo text-[26px] font-extrabold tracking-[-0.6px]">
-          DDOBAGI TOOLS
+          {content.performance.eyebrow}
         </p>
         <h2 className="mt-[6px] font-archivo text-[76px] font-extrabold leading-none tracking-[-2px] text-[#b53131]">
-          Our Service
+          {content.performance.title}
         </h2>
         <p className="mt-[36px] text-[46px] font-bold leading-[1.2] tracking-[-1px]">
-          수백 건 이상의 외국 법인 설립 실적
+          {content.performance.subtitle}
         </p>
         <p className="mt-[18px] text-[20px] leading-[1.6] tracking-[-0.4px] text-[#d7d7d7]">
-          이미 수많은 외국인 사업가들이 한국 시장에 진출할 때 저희를
-          선택했습니다.
+          {content.performance.description}
         </p>
       </div>
 
       <div className="h-[150px] border-r" />
 
-      <div className="bg-[#1e1e1e] px-[217.5px] py-[117.5px] w-full flex justify-center items-center">
-        <div className="grid grid-cols-2 bg-bk gap-5 w-full justify-center">
-          {kpis.map((item, idx) => (
+      <div className="bg-[#1e1e1e] px-[217.5px] py-[117.5px] max-w-[1280px] w-full flex justify-center items-center">
+        <div className="grid w-full grid-cols-2 gap-5 bg-bk justify-center">
+          {content.performance.kpis.map((item, idx) => (
             <div
               key={item.title}
-              className={`col-span-1 w-[410px] rounded-[18px] bg-white p-8 text-white p-12 col-span-1 ${idx === 0 ? "" : "opacity-95"}`}>
+              className={`col-span-1 w-[410px] rounded-[18px] bg-white p-12 text-white ${idx === 0 ? "" : "opacity-95"}`}>
               <div className="relative flex flex-col gap-2">
-                <p className="font-archivo text-primary text-4xl font-extrabold leading-11 tracking-[-3px] text-[45px]">
+                <p className="font-archivo text-[45px] font-extrabold leading-11 tracking-[-3px] text-primary">
                   {item.value.replace(/[+%]$/, "")}
                   {/[+%]$/.test(item.value) && (
                     <sup className="absolute text-lg">
@@ -172,12 +289,12 @@ function DesktopSection6() {
                     </sup>
                   )}
                 </p>
-                <p className="text-bk text-lg font-bold leading-7 tracking-[-1px] text-[22px]">
+                <p className="text-[22px] font-bold leading-7 tracking-[-1px] text-bk">
                   {item.title}
                 </p>
               </div>
               <div className="mt-7 w-full border-t border-primary" />
-              <p className="text-bk mt-10 text-right text-base font-medium">
+              <p className="mt-10 text-right text-base font-medium text-bk">
                 {item.descPrefix}
                 <br />
                 <span className="text-primary">{item.descHighlight}</span>
@@ -188,99 +305,104 @@ function DesktopSection6() {
         </div>
       </div>
 
-      <button className="mt-8 w-full rounded-full bg-primary px-12.5 py-6.5 text-2xl font-semibold text-white transition-colors hover:bg-primary-dark mt-10 w-auto">
-        지금 바로 문의하기
+      <button className="mt-31.5 max-w-68 rounded-full bg-primary px-11 py-6.5 text-2xl font-semibold text-white transition-colors hover:bg-primary-dark w-auto">
+        {content.performance.cta}
       </button>
     </section>
   );
 }
 
-function DesktopSection7() {
+function DesktopSection7({ locale }: { locale: Locale }) {
+  const content = getMainContent(locale);
+  const [item1, item2, item3] = content.responsibility.items;
+
   return (
-    <section className="bg-white py-[140px] text-center px-[320px]">
-      <p className="text-[48px] text-[30px] font-bold tracking-[-0.75px]">
-        우리는 A부터 Z까지
+    <section className="bg-white py-[140px] text-center">
+      <p className="text-[30px] font-bold tracking-[-0.75px]">
+        {content.responsibility.titleTop}
         <br />
-        <span className="text-primary">모든 과정을 책임집니다</span>
+        <span className="text-primary">
+          {content.responsibility.titleBottom}
+        </span>
       </p>
 
-      <div className="mt-[56px] grid grid-cols-3 gap-[20px]">
+      <div className="mx-auto mt-14 flex max-w-[1280px] justify-between">
         <article className="rounded-[18px] px-[30px] py-[34px]">
-          <p className="font-pretendard text-2xl font-bold text-primary text-left ml-3">
-            성공 사례
+          <p className="ml-3 text-left text-2xl font-bold text-primary">
+            {item1.label}
           </p>
-          <p className="pt-8 font-archivo relative text-[4.25rem] text-[128px] font-extrabold leading-none tracking-[-9.8px] text-left">
-            {"1000"}
-            <sup className="font-archivo absolute text-lg text-[72px] font-bold top-1">
+          <p className="relative pt-8 text-left font-archivo text-[128px] font-extrabold leading-none tracking-[-9.8px]">
+            {item1.value.replace("+", "")}
+            <sup className="font-archivo absolute top-1 text-[72px] font-bold">
               +
             </sup>
           </p>
-          <p className="text-bk mt-[10px] text-lg text-left ml-3">
-            중국 기업의 성공적인 한국 시장 진출을 지원
+          <p className="ml-3 mt-[10px] text-left text-lg text-bk">
+            {item1.desc}
           </p>
         </article>
-        <article className="rounded-[18px] px-[30px] py-[34px] relative">
-          <p className="font-pretendard text-2xl font-bold text-primary text-left ml-3">
-            로컬 전문팀 보유
+
+        <article className="relative rounded-[18px] px-[30px] py-[34px]">
+          <p className="ml-3 text-left text-2xl font-bold text-primary">
+            {item2.label}
           </p>
-          <p className="relative pt-8 text-left font-archivo text-[4.25rem] text-[128px] font-extrabold leading-none tracking-[-9.8px]">
-            {"100"}
-            <sup className="absolute text-lg text-[46px] font-bold top-6">
-              %
-            </sup>
+          <p className="relative pt-8 text-left font-archivo text-[128px] font-extrabold leading-none tracking-[-9.8px]">
+            {item2.value.replace("%", "")}
+            <sup className="absolute top-6 text-[46px] font-bold">%</sup>
           </p>
-          <p className="text-bk mt-2.5 text-lg text-left ml-3">
-            중·한 이중 언어에 능통한 전문 인력 구성
-          </p>
+          <p className="ml-3 mt-2.5 text-left text-lg text-bk">{item2.desc}</p>
         </article>
-        <article className="rounded-[18px] w-full relative rounded-[18px] px-[30px] py-[34px]">
-          <p className="font-pretendard text-2xl font-bold text-primary text-left ml-3">
-            인허가 원스톱 솔루션
+
+        <article className="relative rounded-[18px] px-[30px] py-[34px]">
+          <p className="ml-3 text-left text-2xl font-bold text-primary">
+            {item3.label}
           </p>
-          {/* 가운데 정렬 */}
-          <p className="top-8 absolute inset-0 flex items-center  bottom-15 text-[300px]  font-archivo font-semibold">
-            {"∞"}
+          <p className="absolute inset-0 bottom-15 left-6 top-15 flex items-center font-archivo text-[300px] font-semibold">
+            {item3.value}
           </p>
           <div className="h-32" />
-          <p className="text-bk mt-[10px] text-lg text-left ml-3">
-            안전한 영주권 설계 및 비자 발급
-          </p>
+          <p className="ml-3 mt-10 text-left text-lg text-bk">{item3.desc}</p>
         </article>
       </div>
     </section>
   );
 }
 
-function DesktopSection8() {
+function DesktopSection8({ locale }: { locale: Locale }) {
+  const content = getMainContent(locale);
+
   return (
-    <section className="bg-bk py-35  text-white flex justify-center">
-      <div className="relative min-w-[1920px] text-left px-80">
+    <section className="bg-bk py-35 text-white flex justify-center">
+      <div className="relative w-full max-w-[1280px] mx-auto text-left">
         <div className="relative isolate">
-          <p className="absolute -top-15.5 z-0 font-archivo text-[100px] font-extrabold text-[#2F2E2E] tracking-[-2px]">
-            About
+          <p className="absolute -top-15.5 z-0 font-archivo text-[100px] font-extrabold tracking-[-2px] text-[#2F2E2E]">
+            {content.about.bgTitle}
           </p>
 
           <p className="relative z-10 font-archivo text-[40px] font-extralight">
-            DDOBAGI TOOLS
+            {content.about.titleTop}
             <br />
-            ONE-STOP SOLUTION
-            <span className="font-pretendard font-light">에 대한</span>
+            {content.about.titleMid}
+            <span className="font-pretendard font-light">
+              {" "}
+              {content.about.titleSuffix}
+            </span>
           </p>
         </div>
 
         <h2 className="mt-7.5 text-[40px] font-bold tracking-[-1px]">
-          자세한 내용이 궁금하시다면?
+          {content.about.heading}
         </h2>
 
         <div className="mt-10 grid grid-cols-3 gap-5">
-          {steps.map((item, idx) => (
+          {content.about.steps.map((item) => (
             <article
               key={item.title}
               className="rounded-[18px] border border-[#4f4f4f] bg-[#212121] px-5 py-10 text-center">
               <h3 className="font-archivo text-[34px] font-bold leading-[1.1] text-primary">
                 {item.title}
               </h3>
-              <p className="mt-5 text-[22px] leading-normal text-[#d2d2d2] font-pretendard font-normal whitespace-pre-line">
+              <p className="mt-5 whitespace-pre-line font-pretendard text-[22px] font-normal leading-normal text-[#d2d2d2]">
                 {item.desc}
               </p>
             </article>
@@ -294,41 +416,45 @@ function DesktopSection8() {
 function DesktopSection9({
   faqOpen,
   onToggle,
+  locale,
 }: {
   faqOpen: number | null;
   onToggle: (index: number) => void;
+  locale: Locale;
 }) {
+  const content = getMainContent(locale);
+
   return (
     <section
       id="faq"
-      className="bg-white py-35 px-80 flex gap-54.75 min-w-[1920px] mx-auto ">
-      <div className="relative isolate ">
-        <p className="absolute -top-15.5 font-archivo text-[100px] font-extrabold text-[#F6F6F6] tracking-[-2px]">
+      className="bg-white py-35 flex gap-54.75 w-full max-w-[1280px] mx-auto">
+      <div className="relative isolate">
+        <p className="absolute -top-15.5 font-archivo text-[100px] font-extrabold tracking-[-2px] text-[#F6F6F6]">
           FAQ
         </p>
         <p className="relative z-10 font-pretendard text-[40px] font-bold">
-          자주 묻는 질문
+          {content.faq.title}
         </p>
       </div>
 
-      <div className="space-y-5 flex-1">
-        {faqItems.map((item, idx) => (
+      <div className="flex-1 space-y-5">
+        {content.faq.items.map((item, idx) => (
           <article
             key={item.q}
-            className="rounded-[20px] bg-[#f5f5f5] p-12 w-full">
+            className="w-full rounded-[20px] bg-[#f5f5f5] p-12">
             <button
               className="flex w-full items-center justify-between"
               onClick={() => onToggle(idx)}>
-              <div className="flex items-center text-[22px] font-semibold tracking-[-0.5px] w-full">
+              <div className="flex w-full items-center text-[22px] font-semibold tracking-[-0.5px]">
                 <span>Q.</span>
                 <p>{item.q}</p>
               </div>
 
               <Image
-                src={"/icons/arrow-bottom.svg"}
+                src="/icons/arrow-bottom.svg"
                 width={33}
                 height={33}
-                alt="arrow icon"
+                alt="toggle"
                 className={`text-[15px] leading-none transition-transform ${faqOpen === idx ? "rotate-180" : ""}`}
               />
             </button>
@@ -344,26 +470,34 @@ function DesktopSection9({
   );
 }
 
-function DesktopSection10() {
+function DesktopSection10({ locale }: { locale: Locale }) {
+  const content = getMainContent(locale);
+
   return (
     <section id="contact" className="bg-bk py-27.5 text-white">
-      <div className="min-w-[1920px] mx-auto flex justify-betwee gap-55.75 px-80">
+      <div className="w-full max-w-[1280px] mx-auto flex justify-between gap-55.75">
         <div>
           <div className="relative isolate mt-39.25">
-            <p className="absolute -top-15.5 z-0 font-archivo text-[110px] font-extrabold text-[#2F2E2E] tracking-[-2px]">
-              Contact
+            <p className="absolute -top-15.5 z-0 font-archivo text-[110px] font-extrabold tracking-[-2px] text-[#2F2E2E]">
+              {content.contact.bgTitle}
             </p>
 
-            <p className="relative z-10 font-archivo text-[48px] font-extraligh whitespace-pre-line">
-              {"또바기툴즈는\n항상 준비되어 있습니다."}
+            <p className="relative z-10 whitespace-pre-line font-archivo text-[48px] font-extraligh">
+              {content.contact.heading}
             </p>
           </div>
-          <button className="mt-15 rounded-[100px] bg-primary px-13 py-6.5 text-[13px] font-semibold tracking-[-0.3px]">
-            문의하기
+          <button className="mt-15 flex items-center gap-3.5 rounded-[100px] bg-primary px-12 py-6.5 text-2xl font-semibold tracking-[-0.3px]">
+            <span>{content.contact.cta}</span>
+            <Image
+              src="/icons/arrow-right.svg"
+              width={20}
+              height={27}
+              alt="arrow"
+            />
           </button>
         </div>
-        <div className="w-[620px] space-y-[24px] flex-1">
-          {contacts.map((person) => (
+        <div className="w-[620px] flex-1 space-y-[24px]">
+          {content.contact.contacts.map((person) => (
             <article
               key={person.en}
               className="rounded-[18px] border border-[#5a5a5a] bg-[#212121] p-[40px]">
@@ -373,7 +507,7 @@ function DesktopSection10() {
                     {person.en}
                   </p>
                   <p className="mt-[10px] text-[34px] tracking-[-0.8px]">
-                    {person.ko}{" "}
+                    {person.localName}{" "}
                     <span className="text-[18px]">{person.role}</span>
                   </p>
                 </div>
@@ -386,19 +520,27 @@ function DesktopSection10() {
 
               <div className="mt-[26px] grid grid-cols-2 gap-y-[14px] text-[18px] tracking-[-0.45px]">
                 <p>
-                  <strong className="font-medium">Phone </strong>
+                  <strong className="font-medium">
+                    {content.contact.fields.phone}{" "}
+                  </strong>
                   {person.phone}
                 </p>
                 <p>
-                  <strong className="font-medium">Wechat </strong>
+                  <strong className="font-medium">
+                    {content.contact.fields.wechat}{" "}
+                  </strong>
                   {person.wechat}
                 </p>
                 <p>
-                  <strong className="font-medium">Tell </strong>
+                  <strong className="font-medium">
+                    {content.contact.fields.tell}{" "}
+                  </strong>
                   {person.tell}
                 </p>
                 <p>
-                  <strong className="font-medium">Kakao </strong>
+                  <strong className="font-medium">
+                    {content.contact.fields.kakao}{" "}
+                  </strong>
                   {person.kakao}
                 </p>
               </div>
@@ -413,28 +555,33 @@ function DesktopSection10() {
 function DesktopSection11({
   agree,
   onToggleAgree,
+  locale,
 }: {
   agree: boolean;
   onToggleAgree: () => void;
+  locale: Locale;
 }) {
+  const content = getMainContent(locale);
+
   return (
-    <section className="bg-white px-80 py-[140px]">
+    <section className="bg-white py-[140px]">
       <h2 className="text-center text-[44px] font-bold tracking-[-1px]">
-        간편 문의
+        {content.inquiry.title}
       </h2>
 
-      <form className="mt-[56px] flex flex-col gap-[34px]">
+      <form className="mx-auto mt-[56px] flex max-w-[1280px] flex-col gap-[34px]">
         <div className="grid grid-cols-2 gap-[32px]">
           <label className="flex flex-col gap-[14px]">
-            <span className="text-[20px] font-semibold">문의 종류</span>
-            {/* arrow icon 안뜨게 하려면? */}
+            <span className="text-[20px] font-semibold">
+              {content.inquiry.type}
+            </span>
             <select
               className="h-[72px] rounded-[8px] bg-[#f5f5f5] text-[18px] text-[#808080] outline-none appearance-none px-6"
               defaultValue="">
               <option value="" disabled>
-                선택해주세요
+                {content.inquiry.typePlaceholder}
               </option>
-              {inquiryTypes.map((type) => (
+              {content.inquiry.types.map((type) => (
                 <option key={type} value={type}>
                   {type}
                 </option>
@@ -446,26 +593,32 @@ function DesktopSection11({
 
         <div className="grid grid-cols-2 gap-[32px]">
           <label className="flex flex-col gap-[14px]">
-            <span className="text-[20px] font-semibold">이름</span>
+            <span className="text-[20px] font-semibold">
+              {content.inquiry.name}
+            </span>
             <input
               className="h-[72px] rounded-[8px] bg-[#f5f5f5] px-[24px] text-[18px] outline-none"
-              placeholder="이름을 입력해주세요"
+              placeholder={content.inquiry.namePlaceholder}
             />
           </label>
           <label className="flex flex-col gap-[14px]">
-            <span className="text-[20px] font-semibold">연락처</span>
+            <span className="text-[20px] font-semibold">
+              {content.inquiry.contact}
+            </span>
             <input
               className="h-[72px] rounded-[8px] bg-[#f5f5f5] px-[24px] text-[18px] outline-none"
-              placeholder="연락 가능한 이메일 또는 전화번호"
+              placeholder={content.inquiry.contactPlaceholder}
             />
           </label>
         </div>
 
         <label className="flex flex-col gap-[14px]">
-          <span className="text-[22px] font-semibold">문의 내용</span>
+          <span className="text-[22px] font-semibold">
+            {content.inquiry.message}
+          </span>
           <textarea
             className="h-[348px] resize-none rounded-[8px] bg-[#f5f5f5] px-[24px] py-[20px] text-[18px] outline-none"
-            placeholder="궁금한 내용을 자세히 적어주세요"
+            placeholder={content.inquiry.messagePlaceholder}
           />
         </label>
 
@@ -474,22 +627,23 @@ function DesktopSection11({
           onClick={onToggleAgree}
           className="flex items-center gap-2 text-left text-[16px] text-bk">
           <span
-            className={`flex h-6 w-6 items-center justify-center rounded-full border ${agree && "border-[#808080] bg-white text-transparent"}`}>
+            className={`flex h-6 w-6 items-center justify-center rounded-full border ${
+              agree ? "border-[#808080] bg-white text-transparent" : ""
+            }`}>
             ✓
           </span>
-          개인정보 수집 및 이용에 동의합니다. 수집된 정보는 문의 답변 목적으로만
-          사용되며, 법정 보유기간 동안 안전 하게 보관됩니다.
+          {content.inquiry.consent}
         </button>
 
         <button
           type="submit"
-          className="mx-auto mt-2 rounded-[100px] bg-[#797979] px-13 py-6.5 text-[24px] font-semibold tracking-[-0.6px] text-white flex items-center gap-3.5">
-          <span>문의 보내기</span>
+          className="mx-auto mt-2 flex items-center gap-3.5 rounded-[100px] bg-[#797979] px-13 py-6.5 text-[24px] font-semibold tracking-[-0.6px] text-white">
+          <span>{content.inquiry.submit}</span>
           <Image
-            src={"/icons/arrow-right.svg"}
+            src="/icons/arrow-right.svg"
             width={20}
             height={27}
-            alt="arrow right"
+            alt="arrow"
             className="inline"
           />
         </button>
@@ -498,63 +652,108 @@ function DesktopSection11({
   );
 }
 
-function DesktopSection12() {
+function DesktopSection12({ locale }: { locale: Locale }) {
+  const content = getMainContent(locale);
+
   return (
-    <footer className="bg-[#f5f5f5] px-[320px] pb-[60px] pt-[40px]">
-      <div className="flex items-center justify-between border-b border-[#141414] pb-[28px]">
+    <footer className="w-full bg-[#f5f5f5] pb-[54px] pt-[40px]">
+      <div className="mx-auto flex max-w-[1280px] items-center justify-between border-b border-[#141414] pb-[28px]">
         <Image
-          src="/main/ddobagi-tools.png"
+          src="/icons/logo-color.svg"
           width={117}
           height={42}
           alt="ddobagi tools"
         />
-        <div className="flex items-center gap-[40px] text-[16px] font-bold text-[#363636]">
-          <span>서비스 이용약관</span>
-          <span>개인정보처리방침</span>
+        <div className="flex items-center gap-10 text-[16px] font-bold text-[#363636]">
+          <span>{content.footer.terms}</span>
+          <span>{content.footer.privacy}</span>
         </div>
       </div>
 
-      <div className="mt-[24px] flex items-center gap-[40px] text-[18px] tracking-[-0.4px] text-[#141414]">
+      <div className="mx-auto mt-[24px] flex max-w-[1280px] items-center gap-[40px] text-[18px] tracking-[-0.4px] text-[#141414]">
         <p>
-          <strong>사업자등록번호.</strong> 684-81-03181
+          <strong>{content.footer.businessNo}</strong> 684-81-03181
         </p>
         <p>
-          <strong>주소.</strong> 서울특별시 마포구 양화로 78-7, 3층
+          <strong>{content.footer.address}</strong> 서울특별시 마포구 양화로
+          78-7, 3층
         </p>
         <p>
-          <strong>이메일.</strong> ddobagitools@naver.com
+          <strong>{content.footer.email}</strong> ddobagitools@naver.com
         </p>
       </div>
     </footer>
   );
 }
 
-export default function DesktopMain() {
+export default function DesktopMain({ locale }: { locale: Locale }) {
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
   const [agree, setAgree] = useState(false);
+  const [heroTransition, setHeroTransition] = useState(0);
+  const section2Ref = useRef<HTMLElement>(null);
+  const section3Ref = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const updateHeroTransition = () => {
+      const section2 = section2Ref.current;
+      const section3 = section3Ref.current;
+
+      if (!section2 || !section3) {
+        return;
+      }
+
+      const section2Bottom = section2.offsetTop + section2.offsetHeight;
+      const transitionStart = section2Bottom - 260;
+      const transitionEnd = section3.offsetTop + 260;
+      const raw =
+        (window.scrollY - transitionStart) / (transitionEnd - transitionStart);
+      const progress = Math.min(1, Math.max(0, raw));
+
+      setHeroTransition(progress);
+    };
+
+    updateHeroTransition();
+    window.addEventListener("scroll", updateHeroTransition, { passive: true });
+    window.addEventListener("resize", updateHeroTransition);
+
+    return () => {
+      window.removeEventListener("scroll", updateHeroTransition);
+      window.removeEventListener("resize", updateHeroTransition);
+    };
+  }, []);
 
   return (
     <div className="hidden md:block">
-      <DesktopSection1 />
+      <DesktopSection1 locale={locale} />
       <div className="overflow-x-auto">
-        <div className="min-w-[1920px]">
-          <DesktopSection2 />
-
-          <DesktopSection4 />
-          <DesktopSection5 />
-          <DesktopSection6 />
-          <DesktopSection7 />
-          <DesktopSection8 />
+        <div className="w-full min-w-[1280px] mx-auto">
+          <DesktopSection2
+            locale={locale}
+            sectionRef={section2Ref}
+            heroTransition={heroTransition}
+          />
+          <DesktopSection3
+            locale={locale}
+            sectionRef={section3Ref}
+            heroTransition={heroTransition}
+          />
+          <DesktopSection4 locale={locale} />
+          <DesktopSection5 locale={locale} />
+          <DesktopSection6 locale={locale} />
+          <DesktopSection7 locale={locale} />
+          <DesktopSection8 locale={locale} />
           <DesktopSection9
+            locale={locale}
             faqOpen={faqOpen}
             onToggle={(idx) => setFaqOpen(faqOpen === idx ? null : idx)}
           />
-          <DesktopSection10 />
+          <DesktopSection10 locale={locale} />
           <DesktopSection11
+            locale={locale}
             agree={agree}
             onToggleAgree={() => setAgree((prev) => !prev)}
           />
-          <DesktopSection12 />
+          <DesktopSection12 locale={locale} />
         </div>
       </div>
     </div>
