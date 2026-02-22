@@ -1,10 +1,16 @@
 "use client";
 
-import { RefObject, useEffect, useMemo, useRef, useState } from "react";
+import { RefObject, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 
 import { getMainContent, Locale, SUPPORTED_LOCALES } from "./locales";
+
+const BRAND_LOGOS = Array.from(
+  { length: 15 },
+  (_, index) => `/images/brand-logos/logo-${index + 1}.png`,
+);
 
 function DesktopSection1({ locale }: { locale: Locale }) {
   const [isLangOpen, setIsLangOpen] = useState(false);
@@ -94,34 +100,18 @@ function DesktopSection1({ locale }: { locale: Locale }) {
   );
 }
 
-function DesktopSection2({
-  locale,
-  sectionRef,
-  heroTransition,
-}: {
-  locale: Locale;
-  sectionRef: RefObject<HTMLElement | null>;
-  heroTransition: number;
-}) {
+function DesktopSection2({ locale }: { locale: Locale }) {
   const content = getMainContent(locale);
-  const section2Transition = Math.max(0, (heroTransition - 0.45) / 0.55);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative bg-white text-[#f6f6f6] overflow-hidden">
-      <div className="px-5 md:px-0">
+    <section className="relative bg-white text-[#f6f6f6] overflow-hidden py-[120px] flex items-center justify-center">
+      <div className="relative px-5 md:px-0">
         <p className="pointer-events-none select-none text-center text-[13vw] md:text-[15vw] font-archivo font-extrabold text-[#f6f6f6] leading-none">
           DDOBAGI
           <br />
           TOOLS
         </p>
-        <div
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-4"
-          style={{
-            transform: `translate(-50%, calc(-50% + ${section2Transition * 180}px))`,
-            opacity: Math.max(0, 1 - section2Transition * 1.2),
-          }}>
+        <div className="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 px-4">
           <p className="font-archivo text-[#B53131] text-[40px] md:text-[80px] lg:text-[120px] leading-[110%] text-center font-extrabold break-keep">
             <span>{content.hero.headingTop}</span>
             <br />
@@ -146,40 +136,53 @@ function DesktopSection2({
 function DesktopSection3({
   locale,
   sectionRef,
-  heroTransition,
 }: {
   locale: Locale;
   sectionRef: RefObject<HTMLElement | null>;
-  heroTransition: number;
 }) {
   const content = getMainContent(locale);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end end"],
+  });
+  const smoothed = useSpring(scrollYProgress, {
+    stiffness: 90,
+    damping: 32,
+    mass: 0.45,
+  });
+  const progress = useTransform(smoothed, [0, 0.03, 1], [0, 0, 1]);
+  const whiteFadeOpacity = useTransform(progress, [0, 0.16], [1, 0]);
+  const videoOpacity = useTransform(progress, [0.04, 0.45], [0, 1]);
+  const videoScale = useTransform(progress, [0.04, 0.62], [1.05, 1]);
+  const textOpacity = useTransform(progress, [0.18, 0.66], [0, 1]);
+  const textY = useTransform(progress, [0.18, 0.66], [76, 0]);
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative h-[640px] overflow-hidden bg-bk flex items-center justify-center">
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 h-full w-full object-cover"
-        src="/videos/wave.mp4"
-      />
+    <section ref={sectionRef} className="relative h-[100vh]">
+      <div className="sticky top-0 h-screen overflow-hidden bg-bk">
+        <motion.div
+          className="absolute inset-0 bg-white"
+          style={{ opacity: whiteFadeOpacity }}
+        />
+        <motion.video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 h-full w-full object-cover"
+          style={{ opacity: videoOpacity, scale: videoScale }}
+          src="/videos/wave.mp4"
+        />
 
-      <div
-        className="relative z-10 text-center transition-all duration-75"
-        style={{
-          transform: `translateY(${(1 - heroTransition) * -140}px)`,
-          opacity: Math.min(1, heroTransition * 1.35),
-        }}>
-        <h2 className="font-archivo text-[88px] font-extrabold leading-[0.94] tracking-[-2px] text-white drop-shadow-[0_10px_24px_rgba(0,0,0,0.45)]">
+        <motion.h2
+          className="absolute text-primary left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2 px-4 font-archivo text-[40px] md:text-[80px] lg:text-[120px] font-extrabold leading-[110%] text-center tracking-[-2px] drop-shadow-[0_10px_24px_rgba(0,0,0,0.45)]"
+          style={{ opacity: textOpacity, y: textY }}>
           {content.hero.headingTop}
           <br />
           {content.hero.headingMid}
           <br />
           {content.hero.headingBottom}
-        </h2>
+        </motion.h2>
       </div>
     </section>
   );
@@ -275,6 +278,7 @@ function DesktopSection6({ locale }: { locale: Locale }) {
       <div className="h-[150px] border-r" />
 
       <div className="bg-[#1e1e1e] px-[217.5px] py-[117.5px] max-w-[1280px] w-full flex justify-center items-center">
+        <div className="px-[13px] py-[6px] bg-primary">결과로 증명합니다.</div>
         <div className="grid w-full grid-cols-2 gap-5 bg-bk justify-center">
           {content.performance.kpis.map((item, idx) => (
             <div
@@ -318,12 +322,16 @@ function DesktopSection7({ locale }: { locale: Locale }) {
 
   return (
     <section className="bg-white py-[140px] text-center">
-      <p className="text-[30px] font-bold tracking-[-0.75px]">
+      <p className="text-5xl font-bold tracking-[-0.75px]">
         {content.responsibility.titleTop}
         <br />
         <span className="text-primary">
           {content.responsibility.titleBottom}
         </span>
+      </p>
+
+      <p className="text-[22px] font-normal mt-7.5 whitespace-pre-line">
+        {content.responsibility.description}
       </p>
 
       <div className="mx-auto mt-14 flex max-w-[1280px] justify-between">
@@ -363,6 +371,27 @@ function DesktopSection7({ locale }: { locale: Locale }) {
           <div className="h-32" />
           <p className="ml-3 mt-10 text-left text-lg text-bk">{item3.desc}</p>
         </article>
+      </div>
+
+      <div className="mx-auto mt-[78px] w-full max-w-[1280px] overflow-hidden">
+        <motion.div
+          className="flex w-max items-center gap-[24px]"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}>
+          {[...BRAND_LOGOS, ...BRAND_LOGOS].map((src, idx) => (
+            <div
+              key={`${src}-${idx}`}
+              className="flex h-[74px] w-[115px] shrink-0 items-center justify-center">
+              <Image
+                src={src}
+                width={115}
+                height={74}
+                alt={`brand logo ${(idx % BRAND_LOGOS.length) + 1}`}
+                className="h-[74px] w-[115px] object-contain"
+              />
+            </div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );
@@ -432,7 +461,7 @@ function DesktopSection9({
         <p className="absolute -top-15.5 font-archivo text-[100px] font-extrabold tracking-[-2px] text-[#F6F6F6]">
           FAQ
         </p>
-        <p className="relative z-10 font-pretendard text-[40px] font-bold">
+        <p className="relative z-10 font-pretendard text-[40px] font-bold whitespace-pre-line">
           {content.faq.title}
         </p>
       </div>
@@ -443,9 +472,9 @@ function DesktopSection9({
             key={item.q}
             className="w-full rounded-[20px] bg-[#f5f5f5] p-12">
             <button
-              className="flex w-full items-center justify-between"
+              className="flex w-full items-start justify-between"
               onClick={() => onToggle(idx)}>
-              <div className="flex w-full items-center text-[22px] font-semibold tracking-[-0.5px]">
+              <div className="flex w-full gap-2 text-[22px] font-semibold tracking-[-0.5px] text-left">
                 <span>Q.</span>
                 <p>{item.q}</p>
               </div>
@@ -689,72 +718,31 @@ function DesktopSection12({ locale }: { locale: Locale }) {
 export default function DesktopMain({ locale }: { locale: Locale }) {
   const [faqOpen, setFaqOpen] = useState<number | null>(null);
   const [agree, setAgree] = useState(false);
-  const [heroTransition, setHeroTransition] = useState(0);
-  const section2Ref = useRef<HTMLElement>(null);
   const section3Ref = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const updateHeroTransition = () => {
-      const section2 = section2Ref.current;
-      const section3 = section3Ref.current;
-
-      if (!section2 || !section3) {
-        return;
-      }
-
-      const section2Bottom = section2.offsetTop + section2.offsetHeight;
-      const transitionStart = section2Bottom - 260;
-      const transitionEnd = section3.offsetTop + 260;
-      const raw =
-        (window.scrollY - transitionStart) / (transitionEnd - transitionStart);
-      const progress = Math.min(1, Math.max(0, raw));
-
-      setHeroTransition(progress);
-    };
-
-    updateHeroTransition();
-    window.addEventListener("scroll", updateHeroTransition, { passive: true });
-    window.addEventListener("resize", updateHeroTransition);
-
-    return () => {
-      window.removeEventListener("scroll", updateHeroTransition);
-      window.removeEventListener("resize", updateHeroTransition);
-    };
-  }, []);
 
   return (
     <div className="hidden md:block">
       <DesktopSection1 locale={locale} />
-      <div className="overflow-x-auto">
-        <div className="w-full min-w-[1280px] mx-auto">
-          <DesktopSection2
-            locale={locale}
-            sectionRef={section2Ref}
-            heroTransition={heroTransition}
-          />
-          <DesktopSection3
-            locale={locale}
-            sectionRef={section3Ref}
-            heroTransition={heroTransition}
-          />
-          <DesktopSection4 locale={locale} />
-          <DesktopSection5 locale={locale} />
-          <DesktopSection6 locale={locale} />
-          <DesktopSection7 locale={locale} />
-          <DesktopSection8 locale={locale} />
-          <DesktopSection9
-            locale={locale}
-            faqOpen={faqOpen}
-            onToggle={(idx) => setFaqOpen(faqOpen === idx ? null : idx)}
-          />
-          <DesktopSection10 locale={locale} />
-          <DesktopSection11
-            locale={locale}
-            agree={agree}
-            onToggleAgree={() => setAgree((prev) => !prev)}
-          />
-          <DesktopSection12 locale={locale} />
-        </div>
+      <div className="w-full min-w-[1280px] mx-auto">
+        <DesktopSection2 locale={locale} />
+        <DesktopSection3 locale={locale} sectionRef={section3Ref} />
+        <DesktopSection4 locale={locale} />
+        <DesktopSection5 locale={locale} />
+        <DesktopSection6 locale={locale} />
+        <DesktopSection7 locale={locale} />
+        <DesktopSection8 locale={locale} />
+        <DesktopSection9
+          locale={locale}
+          faqOpen={faqOpen}
+          onToggle={(idx) => setFaqOpen(faqOpen === idx ? null : idx)}
+        />
+        <DesktopSection10 locale={locale} />
+        <DesktopSection11
+          locale={locale}
+          agree={agree}
+          onToggleAgree={() => setAgree((prev) => !prev)}
+        />
+        <DesktopSection12 locale={locale} />
       </div>
     </div>
   );

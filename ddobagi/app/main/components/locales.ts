@@ -98,6 +98,7 @@ export type MainContent = {
   responsibility: {
     titleTop: string;
     titleBottom: string;
+    description: string;
     items: ProofItem[];
   };
   about: {
@@ -202,11 +203,31 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
       titleTop: "What",
       titleBottom: "We DO",
       desktopItems: [
-        { title: "D8 투자비자 발급 대행", desc: "서비스 설명을 입력하세요.", badge: null },
-        { title: "온라인 유통 마케팅 지원", desc: "서비스 설명을 입력하세요.", badge: null },
-        { title: "전문 세무 회계 관리", desc: "서비스 설명을 입력하세요.", badge: null },
-        { title: "한국 법인 설립 대행", desc: "서비스 설명을 입력하세요.", badge: null },
-        { title: "외국인투자기업(FDI) 등록 지원", desc: "서비스 설명을 입력하세요.", badge: null },
+        {
+          title: "D8 투자비자 발급 대행",
+          desc: "서비스 설명을 입력하세요.",
+          badge: null,
+        },
+        {
+          title: "온라인 유통 마케팅 지원",
+          desc: "서비스 설명을 입력하세요.",
+          badge: null,
+        },
+        {
+          title: "전문 세무 회계 관리",
+          desc: "서비스 설명을 입력하세요.",
+          badge: null,
+        },
+        {
+          title: "한국 법인 설립 대행",
+          desc: "서비스 설명을 입력하세요.",
+          badge: null,
+        },
+        {
+          title: "외국인투자기업(FDI) 등록 지원",
+          desc: "서비스 설명을 입력하세요.",
+          badge: null,
+        },
       ],
       mobileCards: [
         {
@@ -221,21 +242,24 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
           title: "온라인 유통",
           subtitle: "마케팅 지원",
           iconSrc: "/2231-988.svg",
-          description: "한국 진출 후 판매까지 오픈마켓 온라인 유통 마케팅 전문 운영진이 함께합니다",
+          description:
+            "한국 진출 후 판매까지 오픈마켓 온라인 유통 마케팅 전문 운영진이 함께합니다",
           showDetails: false,
         },
         {
           title: "전문 세무",
           subtitle: "회계 관리",
           iconSrc: "/2231-1006.svg",
-          description: "외국인 법인 특화 세무관리, 신고, 연말정산까지 완벽하게 처리",
+          description:
+            "외국인 법인 특화 세무관리, 신고, 연말정산까지 완벽하게 처리",
           showDetails: false,
         },
         {
           title: "한국 법인",
           subtitle: "설립 대행",
           iconSrc: "/2231-1043.svg",
-          description: "국내 거소가 없어도 문제 없습니다. 외국인을 위한 맞춤 설립 절차 진행",
+          description:
+            "국내 거소가 없어도 문제 없습니다. 외국인을 위한 맞춤 설립 절차 진행",
           details:
             "아포스티유 공증 + 법인등기 + 법인인감증명서 + 사업자등록증 + 계좌 개설 + 통신판매업신고까지",
           showDetails: true,
@@ -244,7 +268,8 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
           title: "외국인투자기업(FDI)",
           subtitle: "등록 지원",
           iconSrc: "/2231-1078.svg",
-          description: "세금 감면, 정부 혜택 등 외투기업으로 누릴 수 있는 이점을 확보하세요",
+          description:
+            "세금 감면, 정부 혜택 등 외투기업으로 누릴 수 있는 이점을 확보하세요",
           details: "아포스티유 공증 + 외국인투자기업(FDI) 등록",
           showDetails: true,
         },
@@ -254,7 +279,8 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
       eyebrow: "DDOBAGI TOOLS",
       title: "Our Service",
       subtitle: "수백 건 이상의 외국 법인 설립 실적",
-      description: "이미 수많은 외국인 사업가들이 한국 시장에 진출할 때 저희를 선택했습니다.",
+      description:
+        "이미 수많은 외국인 사업가들이 한국 시장에 진출할 때 저희를 선택했습니다.",
       cta: "지금 바로 문의하기",
       kpis: [
         {
@@ -290,6 +316,8 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
     responsibility: {
       titleTop: "우리는 A부터 Z까지",
       titleBottom: "모든 과정을 책임집니다",
+      description:
+        "DDOBAGI TOOLS는 나의 회사라는 마음가짐으로\n모든 프로젝트를 책임집니다.",
       items: [
         {
           label: "성공 사례",
@@ -419,18 +447,39 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
       titleTop: "What",
       titleBottom: "We Do",
       desktopItems: [
-        { title: "D-8 Investor Visa Support", desc: "Service details will be added.", badge: null },
-        { title: "Online Distribution & Marketing", desc: "Service details will be added.", badge: null },
-        { title: "Professional Tax & Accounting", desc: "Service details will be added.", badge: null },
-        { title: "Korean Corporation Setup", desc: "Service details will be added.", badge: null },
-        { title: "FDI Registration Support", desc: "Service details will be added.", badge: null },
+        {
+          title: "D-8 Investor Visa Support",
+          desc: "Service details will be added.",
+          badge: null,
+        },
+        {
+          title: "Online Distribution & Marketing",
+          desc: "Service details will be added.",
+          badge: null,
+        },
+        {
+          title: "Professional Tax & Accounting",
+          desc: "Service details will be added.",
+          badge: null,
+        },
+        {
+          title: "Korean Corporation Setup",
+          desc: "Service details will be added.",
+          badge: null,
+        },
+        {
+          title: "FDI Registration Support",
+          desc: "Service details will be added.",
+          badge: null,
+        },
       ],
       mobileCards: [
         {
           title: "D-8 Investor Visa",
           subtitle: "Support",
           iconSrc: "/2231-966.svg",
-          description: "Prepare your D-8 visa with our specialized administration team.",
+          description:
+            "Prepare your D-8 visa with our specialized administration team.",
           details: "Apostille notarization + D-8 filing + document processing",
           showDetails: true,
         },
@@ -438,29 +487,34 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
           title: "Online Distribution",
           subtitle: "Marketing",
           iconSrc: "/2231-988.svg",
-          description: "From market entry to sales, our e-commerce specialists support your growth.",
+          description:
+            "From market entry to sales, our e-commerce specialists support your growth.",
           showDetails: false,
         },
         {
           title: "Tax",
           subtitle: "Accounting",
           iconSrc: "/2231-1006.svg",
-          description: "Foreign-invested business tax management, reporting, and closing support.",
+          description:
+            "Foreign-invested business tax management, reporting, and closing support.",
           showDetails: false,
         },
         {
           title: "Korean Entity",
           subtitle: "Setup",
           iconSrc: "/2231-1043.svg",
-          description: "No local residence in Korea? We still guide you through a tailored process.",
-          details: "Apostille + registration + business license + bank account + e-commerce filing",
+          description:
+            "No local residence in Korea? We still guide you through a tailored process.",
+          details:
+            "Apostille + registration + business license + bank account + e-commerce filing",
           showDetails: true,
         },
         {
           title: "FDI",
           subtitle: "Registration",
           iconSrc: "/2231-1078.svg",
-          description: "Secure tax benefits and policy incentives available to FDI companies.",
+          description:
+            "Secure tax benefits and policy incentives available to FDI companies.",
           details: "Apostille notarization + FDI registration",
           showDetails: true,
         },
@@ -470,7 +524,8 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
       eyebrow: "DDOBAGI TOOLS",
       title: "Our Service",
       subtitle: "Proven track record in foreign corporation setup",
-      description: "Entrepreneurs entering Korea continue to choose Ddobagi for reliable execution.",
+      description:
+        "Entrepreneurs entering Korea continue to choose Ddobagi for reliable execution.",
       cta: "Contact Us Now",
       kpis: [
         {
@@ -506,6 +561,8 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
     responsibility: {
       titleTop: "From A to Z,",
       titleBottom: "we own the full process",
+      description:
+        "At DDOBAGI TOOLS, we take ownership of every project\nas if it were our own company.",
       items: [
         {
           label: "Success Cases",
@@ -548,7 +605,7 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
       ],
     },
     faq: {
-      title: "Frequently Asked Questions",
+      title: "Frequently\nAsked Questions\n(FAQ)",
       items: [
         {
           q: "Do I need a local acquaintance in Korea to incorporate?",
@@ -596,7 +653,12 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
       consent:
         "I agree to the collection and use of personal information. Data is used only for inquiry responses and retained securely for the legal retention period.",
       submit: "Send Inquiry",
-      types: ["Incorporation", "Visa & Administration", "Distribution/Marketing", "Other"],
+      types: [
+        "Incorporation",
+        "Visa & Administration",
+        "Distribution/Marketing",
+        "Other",
+      ],
     },
     footer: {
       terms: "Terms of Service",
@@ -636,10 +698,18 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
       titleBottom: "We Do",
       desktopItems: [
         { title: "D-8 投资签证办理", desc: "服务说明即将更新。", badge: null },
-        { title: "线上流通与营销支持", desc: "服务说明即将更新。", badge: null },
+        {
+          title: "线上流通与营销支持",
+          desc: "服务说明即将更新。",
+          badge: null,
+        },
         { title: "专业税务会计管理", desc: "服务说明即将更新。", badge: null },
         { title: "韩国法人设立代办", desc: "服务说明即将更新。", badge: null },
-        { title: "外商投资企业(FDI)登记", desc: "服务说明即将更新。", badge: null },
+        {
+          title: "外商投资企业(FDI)登记",
+          desc: "服务说明即将更新。",
+          badge: null,
+        },
       ],
       mobileCards: [
         {
@@ -722,6 +792,8 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
     responsibility: {
       titleTop: "从 A 到 Z，",
       titleBottom: "全流程由我们负责",
+      description:
+        "DDOBAGI TOOLS 以把客户公司当作自己公司的心态，\n对每个项目负责到底。",
       items: [
         {
           label: "成功案例",
