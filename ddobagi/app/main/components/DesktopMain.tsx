@@ -277,8 +277,9 @@ function DesktopSection6({ locale }: { locale: Locale }) {
 
       <div className="h-[150px] border-r" />
 
-      <div className="bg-[#1e1e1e] px-[217.5px] py-[117.5px] max-w-[1280px] w-full flex justify-center items-center">
-        <div className="px-[13px] py-[6px] bg-primary">결과로 증명합니다.</div>
+      <div className="bg-[#1e1e1e] relative px-[217.5px] py-[117.5px] max-w-[1280px] w-full flex justify-center items-center">
+        
+        <div className="absolute top-[-22px] left-1/2 -translate-x-1/2 px-[13px] py-[6px] bg-primary font-pretendard rounded-lg text-white text-[26px] font-medium">결과로 증명합니다.</div>
         <div className="grid w-full grid-cols-2 gap-5 bg-bk justify-center">
           {content.performance.kpis.map((item, idx) => (
             <div
@@ -540,10 +541,11 @@ function DesktopSection10({ locale }: { locale: Locale }) {
                     <span className="text-[18px]">{person.role}</span>
                   </p>
                 </div>
-                <img
+                <Image
                   src={person.photo}
                   alt={person.en}
-                  className="h-[80px] w-[80px] rounded-full object-cover"
+                  width={80}
+                  height={80}
                 />
               </div>
 

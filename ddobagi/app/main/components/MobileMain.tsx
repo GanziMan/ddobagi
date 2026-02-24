@@ -235,8 +235,8 @@ function MobileSection2({ locale }: { locale: Locale }) {
   return (
     <section
       id="intro-mobile"
-      className="bg-[#141414] px-[20px] py-[80px] text-center text-white">
-      <p className="font-archivo text-[14px] font-extrabold tracking-[-0.35px] text-[#b53131]">
+      className="bg-bk px-[20px] py-[80px] text-center text-white">
+      <p className="font-archivo text-[14px] font-extrabold tracking-[-0.35px] text-primary">
         {content.oneStop.eyebrow}
       </p>
       <p className="mt-[28px] text-[15px] font-light leading-[1.3] tracking-[-0.37px]">
@@ -331,10 +331,12 @@ function ServiceCard({
           {subtitle}
         </h3>
         <div className="w-[68.63px] h-[68.63px] relative flex items-center justify-center flex-shrink-0">
-          <img
+          <Image
             src={iconSrc}
             alt={`${title} ${subtitle}`}
-            className="max-w-full max-h-full object-contain"
+            width={68.63}
+            height={68.63}
+            
           />
         </div>
       </div>
@@ -366,40 +368,48 @@ function MobileSection4({ locale }: { locale: Locale }) {
   return (
     <section
       id="performance-mobile"
-      className="bg-[#141414] px-[20px] py-[80px] text-white">
+      className="bg-[#141414] px-[20px] py-[80px] text-white flex flex-col items-center">
       <p className="font-archivo text-[20px] font-extrabold tracking-[-0.5px] text-[#b53131]">
         {content.performance.eyebrow}
       </p>
       <h2 className="font-archivo mt-[8px] text-[41px] font-extrabold leading-[1.1] tracking-[-1.03px]">
         {content.performance.title}
       </h2>
-      <p className="mt-[22px] text-[26px] font-bold leading-[1.2] tracking-[-0.65px]">
+      <p className="mt-[22px] text-[26px] font-bold leading-[1.2] tracking-[-0.65px] whitespace-pre-line text-center">
         {content.performance.subtitle}
       </p>
-      <p className="mt-[14px] text-[14px] leading-[1.5] tracking-[-0.35px] text-[#d7d7d7]">
+      <p className="mt-[14px] text-[14px] leading-[1.5] tracking-[-0.35px] text-[#d7d7d7] whitespace-pre-line text-center">
         {content.performance.description}
       </p>
-      <div className="mt-[32px] flex flex-col gap-5">
-        {content.performance.kpis.map((item, idx) => (
-          <article
-            key={item.title}
-            className={`rounded-[14px] bg-white p-[16px] ${idx === 0 ? "col-span-2" : "col-span-1"}`}>
-            <p className="font-archivo text-[32px] font-extrabold tracking-[-2px] text-[#b53131]">
-              {item.value}
-            </p>
-            <p className="mt-[4px] text-[14px] font-bold tracking-[-0.35px] text-[#141414]">
-              {item.title}
-            </p>
-            <div className="mt-[10px] border-t border-[#b53131]" />
-            <p className="mt-[10px] text-right text-[12px] font-medium leading-[1.45] tracking-[-0.3px] text-[#363636]">
-              {item.descPrefix}
-              <br />
-              <span className="text-[#b53131]">{item.descHighlight}</span>{" "}
-              {item.descSuffix}
-            </p>
-          </article>
-        ))}
+      <div className="h-[75px] border-r mt-8 " />
+      <div className="relative bg-[#1e1e1e] w-full mt-8 px-6 rounded-xl py-8">
+      <div className="absolute top-[-11.5px] left-1/2 -translate-x-1/2 px-1.5 py-0.75 text-[13px] bg-primary font-pretendard rounded-lg text-white font-medium">결과로 증명합니다.</div>
+        <div className="flex flex-col gap-5 w-full">
+          {content.performance.kpis.map((item, idx) => (
+            <article
+              key={item.title}
+              className={`rounded-[14px] bg-white p-[16px] ${idx === 0 ? "col-span-2" : "col-span-1"}`}>
+              <p className="font-archivo text-[32px] font-extrabold tracking-[-2px] text-[#b53131]">
+                {item.value}
+              </p>
+              <p className="mt-[4px] text-[14px] font-bold tracking-[-0.35px] text-[#141414]">
+                {item.title}
+              </p>
+              <div className="mt-[10px] border-t border-[#b53131]" />
+              <p className="mt-[10px] text-right text-[12px] font-medium leading-[1.45] tracking-[-0.3px] text-[#363636]">
+                {item.descPrefix}
+                <br />
+                <span className="text-[#b53131]">{item.descHighlight}</span>{" "}
+                {item.descSuffix}
+              </p>
+            </article>
+          ))}
+        </div>
       </div>
+
+      <button className=" mt-8 py-5 px-8 max-w-68 rounded-full bg-primary text-sm font-semibold text-white transition-colors hover:bg-primary-dark w-auto">
+        {content.performance.cta}
+      </button>
     </section>
   );
 }
@@ -460,13 +470,16 @@ function MobileSection6({ locale }: { locale: Locale }) {
   return (
     <section
       id="proposal-mobile"
-      className="bg-[#141414] px-[20px] py-[80px] text-white">
-      <p className="font-archivo text-[20px] font-extrabold tracking-[-0.5px] text-[#b53131]">
-        {content.services.eyebrow}
-      </p>
-      <h2 className="mt-[8px] text-[30px] font-bold tracking-[-0.75px]">
+      className="bg-bk px-[20px] py-[80px] text-white">
+     
+      <div className="relative isolate">
+        <p className="absolute -top-8 font-archivo text-[50px] font-extrabold text-[#2f2e2e]">
+          About
+        </p>
+        <p className="relative z-10 font-pretendard text-[23px] tracking-tighter font-bold whitespace-pre-line">
         {content.about.mobileHeading}
-      </h2>
+        </p>
+      </div>
       <p className="mt-[8px] text-[15px] text-[#bfbfbf]">
         {content.about.mobileDescription}
       </p>
@@ -573,10 +586,12 @@ function MobileSection8({ locale }: { locale: Locale }) {
                   <span className="text-[13px]">{person.role}</span>
                 </p>
               </div>
-              <img
+              <Image
                 src={person.photo}
                 alt={person.en}
-                className="h-[54px] w-[54px] rounded-full object-cover"
+                width={40}
+                height={40}
+                
               />
             </div>
             <div className="mt-[12px] grid grid-cols-2 gap-y-[8px] text-[12px] tracking-[-0.3px]">

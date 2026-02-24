@@ -73,7 +73,7 @@ export const contacts = [
     tell: "070-5046-4401",
     kakao: "ddobagikorea",
     photo:
-      "https://www.figma.com/api/mcp/asset/98050360-0833-4f6d-b359-386f42e74176",
+      "/images/qr-dohan.png",
   },
   {
     en: "Park Jihyun",
@@ -84,7 +84,7 @@ export const contacts = [
     tell: "070-5046-4407",
     kakao: "dbgkr-piao",
     photo:
-      "https://www.figma.com/api/mcp/asset/727da113-b95b-422d-be15-a09132fa6f7d",
+      "/images/qr-parkjihyun.png",
   },
 ];
 

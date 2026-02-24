@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function MobileTest() {
   return (
     <div className="min-h-screen bg-white py-20 px-5 flex justify-center">
@@ -20,7 +22,7 @@ export default function MobileTest() {
           <ServiceCard
             title="D8 투자비자"
             subtitle="발급 대행"
-            iconSrc="/2231-966.svg"
+            iconSrc="/images/section3/icon-1.png"
             description="D8투자비자발급 최고의 행정팀과 함께 준비해드립니다"
             details="아포스티유 공증+D8 비자 신고, 서류 업무 대행"
           />
@@ -29,7 +31,7 @@ export default function MobileTest() {
           <ServiceCard
             title="온라인 유통"
             subtitle="마케팅 지원"
-            iconSrc="/2231-988.svg"
+            iconSrc="/images/section3/icon-2.png"
             description="한국 진출 후 판매까지?           오픈마켓 온라인 유통 마케팅 전문 운영진이 함께합니다"
             showDetails={false}
           />
@@ -38,7 +40,7 @@ export default function MobileTest() {
           <ServiceCard
             title="전문 세무"
             subtitle="회계 관리"
-            iconSrc="/2231-1006.svg"
+            iconSrc="/images/section3/icon-3.png"
             description="외국인 법인 특화 세무관리, 신고, 연말정산까지 완벽하게 처리"
             showDetails={false}
           />
@@ -47,7 +49,7 @@ export default function MobileTest() {
           <ServiceCard
             title="한국 법인"
             subtitle="설립 대행"
-            iconSrc="/2231-1043.svg"
+            iconSrc="/images/section3/icon-4.png"
             description="국내 거소가 없어도 문제 없습니다. 외국인을 위한 맞춤 설립 절차 진행           원하는 업종의 인허가 발급까지 가능"
             details="아포스티유 공증+법인등기+법인인감증명서+법인인감도장+법인인감카드+임대차계약+사업자등록증+핸드폰 개통,유심+계좌 개설+공동인증서 발급+통신판매업신고(제외 요청 가능)까지"
           />
@@ -56,7 +58,7 @@ export default function MobileTest() {
           <ServiceCard
             title="외국인투자기업(FDI)"
             subtitle="등록 지원"
-            iconSrc="/2231-1078.svg"
+            iconSrc="/images/section3/icon-5.png"
             description="세금 감면, 정부 혜택 등 외투기업으로 누릴 수 있는 모든 이점을 확보하세요"
             details="아포스티유 공증+외국인투자기업(FDI) 등록"
           />
@@ -93,10 +95,12 @@ function ServiceCard({
           {subtitle}
         </h3>
         <div className="w-[68.63px] h-[68.63px] relative flex items-center justify-center flex-shrink-0">
-          <img
+          <Image
             src={iconSrc}
             alt={`${title} ${subtitle}`}
-            className="max-w-full max-h-full object-contain"
+            width={68.63} 
+            height={68.63}
+            
           />
         </div>
       </div>

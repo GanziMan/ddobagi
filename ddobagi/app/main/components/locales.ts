@@ -159,7 +159,7 @@ const baseContacts: Omit<Contact, "role">[] = [
     tell: "070-5046-4401",
     kakao: "ddobagikorea",
     photo:
-      "https://www.figma.com/api/mcp/asset/98050360-0833-4f6d-b359-386f42e74176",
+      "/images/qr-dohan.png",
   },
   {
     en: "Park Jihyun",
@@ -169,7 +169,7 @@ const baseContacts: Omit<Contact, "role">[] = [
     tell: "070-5046-4407",
     kakao: "dbgkr-piao",
     photo:
-      "https://www.figma.com/api/mcp/asset/727da113-b95b-422d-be15-a09132fa6f7d",
+      "/images/qr-parkjihyun.png",
   },
 ];
 
@@ -233,7 +233,7 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
         {
           title: "D8 투자비자",
           subtitle: "발급 대행",
-          iconSrc: "/2231-966.svg",
+          iconSrc: "/images/section3/icon-1.png",
           description: "D8 투자비자 발급을 최고의 행정팀과 함께 준비해드립니다",
           details: "아포스티유 공증 + D8 비자 신고, 서류 업무 대행",
           showDetails: true,
@@ -241,7 +241,7 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
         {
           title: "온라인 유통",
           subtitle: "마케팅 지원",
-          iconSrc: "/2231-988.svg",
+          iconSrc: "/images/section3/icon-2.png",
           description:
             "한국 진출 후 판매까지 오픈마켓 온라인 유통 마케팅 전문 운영진이 함께합니다",
           showDetails: false,
@@ -249,7 +249,7 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
         {
           title: "전문 세무",
           subtitle: "회계 관리",
-          iconSrc: "/2231-1006.svg",
+          iconSrc: "/images/section3/icon-3.png",
           description:
             "외국인 법인 특화 세무관리, 신고, 연말정산까지 완벽하게 처리",
           showDetails: false,
@@ -257,7 +257,7 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
         {
           title: "한국 법인",
           subtitle: "설립 대행",
-          iconSrc: "/2231-1043.svg",
+          iconSrc: "/images/section3/icon-4.png",
           description:
             "국내 거소가 없어도 문제 없습니다. 외국인을 위한 맞춤 설립 절차 진행",
           details:
@@ -267,7 +267,7 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
         {
           title: "외국인투자기업(FDI)",
           subtitle: "등록 지원",
-          iconSrc: "/2231-1078.svg",
+          iconSrc: "/images/section3/icon-5.png",
           description:
             "세금 감면, 정부 혜택 등 외투기업으로 누릴 수 있는 이점을 확보하세요",
           details: "아포스티유 공증 + 외국인투자기업(FDI) 등록",
@@ -278,9 +278,9 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
     performance: {
       eyebrow: "DDOBAGI TOOLS",
       title: "Our Service",
-      subtitle: "수백 건 이상의 외국 법인 설립 실적",
+      subtitle: "수백 건 이상의\n외국 법인 설립 실적",
       description:
-        "이미 수많은 외국인 사업가들이 한국 시장에 진출할 때 저희를 선택했습니다.",
+        "이미 수많은 외국인 사업가들이 한국 시장에 진출할 때,\n저희를 선택했습니다.",
       cta: "지금 바로 문의하기",
       kpis: [
         {
@@ -342,7 +342,7 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
       titleMid: "ONE-STOP SOLUTION",
       titleSuffix: "에 대한",
       heading: "자세한 내용이 궁금하시다면?",
-      mobileHeading: "ONE-STOP SOLUTIONS에 의한",
+      mobileHeading: "DDOBAGI TOOLS\nONE-STOP SOLUTION에 대한",
       mobileDescription: "복잡한 비즈니스 과정도 쉽고 빠르게",
       steps: [
         {
@@ -477,7 +477,7 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
         {
           title: "D-8 Investor Visa",
           subtitle: "Support",
-          iconSrc: "/2231-966.svg",
+          iconSrc: "/images/section3/icon-1.png",
           description:
             "Prepare your D-8 visa with our specialized administration team.",
           details: "Apostille notarization + D-8 filing + document processing",
@@ -486,7 +486,7 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
         {
           title: "Online Distribution",
           subtitle: "Marketing",
-          iconSrc: "/2231-988.svg",
+          iconSrc: "/images/section3/icon-2.png",
           description:
             "From market entry to sales, our e-commerce specialists support your growth.",
           showDetails: false,
@@ -494,7 +494,7 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
         {
           title: "Tax",
           subtitle: "Accounting",
-          iconSrc: "/2231-1006.svg",
+          iconSrc: "/images/section3/icon-3.png",
           description:
             "Foreign-invested business tax management, reporting, and closing support.",
           showDetails: false,
@@ -502,7 +502,7 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
         {
           title: "Korean Entity",
           subtitle: "Setup",
-          iconSrc: "/2231-1043.svg",
+          iconSrc: "/images/section3/icon-4.png",
           description:
             "No local residence in Korea? We still guide you through a tailored process.",
           details:
@@ -512,7 +512,7 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
         {
           title: "FDI",
           subtitle: "Registration",
-          iconSrc: "/2231-1078.svg",
+          iconSrc: "/images/section3/icon-5.png",
           description:
             "Secure tax benefits and policy incentives available to FDI companies.",
           details: "Apostille notarization + FDI registration",
@@ -715,7 +715,7 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
         {
           title: "D-8 投资签证",
           subtitle: "办理支持",
-          iconSrc: "/2231-966.svg",
+          iconSrc: "/images/section3/icon-1.png",
           description: "由专业行政团队协助您完成 D-8 签证准备。",
           details: "海牙认证 + D-8 申报 + 材料代办",
           showDetails: true,
@@ -723,21 +723,21 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
         {
           title: "线上流通",
           subtitle: "营销支持",
-          iconSrc: "/2231-988.svg",
+            iconSrc: "/images/section3/icon-2.png",
           description: "从进入韩国市场到销售转化，电商团队全程协作。",
           showDetails: false,
         },
         {
           title: "专业税务",
           subtitle: "会计管理",
-          iconSrc: "/2231-1006.svg",
+          iconSrc: "/images/section3/icon-3.png",
           description: "面向外资法人的税务管理、申报与年终结算支持。",
           showDetails: false,
         },
         {
           title: "韩国法人",
           subtitle: "设立代办",
-          iconSrc: "/2231-1043.svg",
+          iconSrc: "/images/section3/icon-4.png",
           description: "即使在韩无居所，也可按您的业务进行定制化设立流程。",
           details: "海牙认证 + 法人登记 + 营业执照 + 开户 + 通信销售备案",
           showDetails: true,
@@ -745,7 +745,7 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
         {
           title: "FDI",
           subtitle: "登记支持",
-          iconSrc: "/2231-1078.svg",
+          iconSrc: "/images/section3/icon-5.png",
           description: "确保享受外资企业可获得的税收减免和政策支持。",
           details: "海牙认证 + 外商投资企业登记",
           showDetails: true,
