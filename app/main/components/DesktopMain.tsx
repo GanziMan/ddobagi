@@ -217,6 +217,12 @@ function DesktopSection4({ locale }: { locale: Locale }) {
 
 function DesktopSection5({ locale }: { locale: Locale }) {
   const content = getMainContent(locale);
+  const badgeLabel =
+    locale === "ko"
+      ? "기본구성"
+      : locale === "en"
+        ? "Base Package"
+        : "基础配置";
 
   return (
     <section id="services" className="bg-white py-[140px]">
@@ -232,22 +238,48 @@ function DesktopSection5({ locale }: { locale: Locale }) {
           </h2>
         </div>
 
-        {content.services.desktopItems.map((item, i) => (
-          <div
-            key={item.title}
-            className="flex flex-col gap-10.5 rounded-[18px] bg-[#f9f9f9] p-12">
-            <h3 className="text-xl font-bold whitespace-pre-line">{item.title}</h3>
-            <div className="w-full">
-              <Image
-                src={`/images/section3/icon-${i + 1}.png`}
-                width={84}
-                height={84}
-                alt={item.title}
-                className="float-end h-[84px] w-[84px]"
-              />
+        {content.services.desktopItems.map((item, i) => {
+          const hoverItem = content.services.mobileCards[i];
+          const hoverDescription = hoverItem?.description ?? item.desc;
+          const hoverDetails = hoverItem?.details;
+          const showHoverDetails = hoverItem?.showDetails && Boolean(hoverDetails);
+
+          return (
+            <div
+              key={item.title}
+              className="group flex min-h-[306px] flex-col rounded-[18px] bg-[#f9f9f9] p-12 transition-colors duration-300 hover:bg-primary">
+              <h3 className="text-xl font-bold whitespace-pre-line group-hover:hidden">
+                {item.title}
+              </h3>
+
+              <div className="mt-auto flex w-full items-end justify-end group-hover:hidden">
+                <Image
+                  src={`/images/section3/icon-${i + 1}.png`}
+                  width={84}
+                  height={84}
+                  alt={item.title}
+                  className="h-[84px] w-[84px]"
+                />
+              </div>
+
+              <div className="hidden w-full grow flex-col group-hover:flex">
+                <p className="text-[16px] leading-[1.5] text-white">
+                  {hoverDescription}
+                </p>
+                {showHoverDetails && (
+                  <div className="mt-auto">
+                    <div className="rounded-[82px] bg-[#961d1d] px-[7px] py-[2px] text-[11px] font-semibold text-white w-fit">
+                      {badgeLabel}
+                    </div>
+                    <p className="mt-[6px] text-[11px] leading-[1.5] text-white">
+                      {hoverDetails}
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
