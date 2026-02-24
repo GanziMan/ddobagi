@@ -204,27 +204,27 @@ const MAIN_CONTENT: Record<Locale, MainContent> = {
       titleBottom: "We DO",
       desktopItems: [
         {
-          title: "D8 투자비자 발급 대행",
+          title: "D8 투자비자\n발급 대행",
           desc: "서비스 설명을 입력하세요.",
           badge: null,
         },
         {
-          title: "온라인 유통 마케팅 지원",
+          title: "온라인 유통\n마케팅 지원",
           desc: "서비스 설명을 입력하세요.",
           badge: null,
         },
         {
-          title: "전문 세무 회계 관리",
+          title: "전문 세무\n회계 관리",
           desc: "서비스 설명을 입력하세요.",
           badge: null,
         },
         {
-          title: "한국 법인 설립 대행",
+          title: "한국 법인\n설립 대행",
           desc: "서비스 설명을 입력하세요.",
           badge: null,
         },
         {
-          title: "외국인투자기업(FDI) 등록 지원",
+          title: "외국인투자기업(FDI)\n등록 지원",
           desc: "서비스 설명을 입력하세요.",
           badge: null,
         },

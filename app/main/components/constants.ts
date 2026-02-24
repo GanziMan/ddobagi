@@ -125,7 +125,7 @@ export const mobileServices = [
 
 export const desktopServices = [
   {
-    title: "D8 투자비자 발급 대행",
+    title: "D8 투자비자\n발급 대행",
     desc: "서비스 설명을 입력하세요.",
   },
   {

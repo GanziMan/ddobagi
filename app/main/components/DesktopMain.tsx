@@ -236,7 +236,7 @@ function DesktopSection5({ locale }: { locale: Locale }) {
           <div
             key={item.title}
             className="flex flex-col gap-10.5 rounded-[18px] bg-[#f9f9f9] p-12">
-            <h3 className="text-xl font-bold">{item.title}</h3>
+            <h3 className="text-xl font-bold whitespace-pre-line">{item.title}</h3>
             <div className="w-full">
               <Image
                 src={`/images/section3/icon-${i + 1}.png`}
